@@ -3,6 +3,7 @@ data/*.csv
 data/*.json
 data/*.geojson
 data/*.xlsx
+data/clean/
 
 # Python
 __pycache__/

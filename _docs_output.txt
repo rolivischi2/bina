@@ -1,0 +1,899 @@
+
+============================================================
+FILE: Velo-Infrastruktur Fragestellungen.docx
+============================================================
+Die ursprünglichen Fragestellungen waren eher deskriptiv, während das CPA-Framework (From Data to Decisions) darauf abzielt, Daten zu nutzen, um konkrete Entscheidungen zu unterstützen. Anstatt nur das Wetter zu analysieren, fokussieren wir uns auf Entscheidungsgrundlagen für Stadtplanung.
+
+Velo-Infrastruktur Zürich: Datengestützte Evaluation von Sicherheit und Auslastung als Entscheidungsgrundlage für den Netzausbau.
+Oberfrage: Welche Standorte erfordern aufgrund von Kapazitätsengpässen und Unfallrisiken vordringliche infrastrukturelle Anpassungen?“
+FF1: Die Lastanalyse 
+Frage: Welche Zählstellen weisen die massivsten Belastungsspitzen auf? Wann und wie hoch ist der Anteil der Stunden, in denen die Infrastruktur über der Komfort-Grenze (Level of Service) betrieben wird?“
+Logik: Ihr identifiziert die „Systemrelevanz“ einer Route. Eine Strecke, die nur am Sonntag Spitzen hat (Freizeit), ist anders zu bewerten als eine Strecke, die Mo–Fr von 07:00 bis 08:30 Uhr kollabiert (Pendler).
+Entscheidungsgrundlage (CPA Step 4):
+Ergebnis A: Spitzen sind kurz und selten: Selektive Massnahmen (z.B. Ampelanpassungen) reichen.
+Ergebnis B: Die Route ist über Stunden am Limit: Hier muss die Velostrategie 2030 zwingend eine Vorzugsroute mit maximaler Breite vorsehen.
+
+FF2: Die Unfallanalyse
+Frage: Inwiefern korreliert das Erreichen der infrastrukturellen Kapazitätsgrenze (High Volume) an spezifischen Zählstellen mit einer überproportionalen Zunahme der Unfallhäufigkeit?
+Logik: Doppelt so viele Velos bedeuten normalerweise doppelt so viele Unfälle (linear). Wenn aber doppelt so viele Velos zu viermal so vielen Unfällen führen, habt ihr ein massives Kapazitätsproblem bewiesen.
+Entscheidungsgrundlage
+Ergebnis A: Unfallrate bleibt linear zur Menge: Markierungen/Signale reichen aus.
+Ergebnis B: Unfallrate schiesst bei Kapazitätsgrenze nach oben: Der Weg muss baulich verbreitert oder eine Alternativroute geschaffen werden (Zwang zur Infrastrukturanpassung).
+FF3: Der Wirksamkeits-Check
+Frage: Inwiefern hat die Einführung von spezifischen infrastrukturellen Massnahmen (z. B. Tempo-30-Zonen oder bauliche Radwege) an ausgewählten Zählstellen-Standorten zu einer statistisch signifikanten Senkung der relativen Unfallrate geführt?
+Logik: Wenn die Stadt 2021 an einem Standort Tempo 30 eingeführt hat, vergleicht ihr den Zeitraum davor (z. B. 2018–2020) mit dem Zeitraum danach (2022–2024). Nur wenn die Rate prozentual stärker sinkt als im städtischen Durchschnitt, ist die Massnahme als Erfolg zu werten.
+Entscheidungsgrundlage :
+Ergebnis A (Kein signifikanter Rückgang): Die Massnahme hat das Sicherheitsziel verfehlt.Entscheidung: Stopp der Ausrollung dieser spezifischen Massnahme. Das Budget muss in wirksamere Alternativen (z. B. komplette bauliche Trennung statt nur Tempo 30) umgeleitet werden.
+Ergebnis B (Signifikanter Rückgang): Die Massnahme ist hochwirksam.
+
+============================================================
+FILE: Projektskizze_Veloverkehr_CH.docx
+============================================================
+BI-Projekt: Veloverkehr in Schweizer Städten
+Projektskizze & Datengrundlage  |  Explorative Datenanalyse mit Python
+Thema & Kontext
+Wie bewegen sich Velofahrende in Schweizer Städten? Die Schweiz hat 2018 den Veloartikel (Art. 88) mit 73.6 % angenommen und 2023 das Veloweggesetz in Kraft gesetzt. Zürich verfolgt die Velostrategie 2030 mit 100 km Netzausbau. Trotzdem zeigt der Mikrozensus 2021 grosse regionale Unterschiede: 8.6 % Veloanteil in der Deutschschweiz vs. 2.9 % in der Romandie. Wir nutzen öffentliche Daten, um Muster und Einflussfaktoren des städtischen Veloverkehrs explorativ zu analysieren.
+Kerndatensätze
+Forschungsfragen
+FF1: Welche zeitlichen Muster (Tagesgang, Wochentag, Saison) zeigt der städtische Veloverkehr?
+FF2: Wie stark beeinflussen Wetterfaktoren (Temperatur, Niederschlag, Wind) das Veloaufkommen?
+FF3: Hat COVID-19 zu einer nachhaltigen Veränderung der Velonutzung geführt?
+FF4: Unterscheiden sich die Veloverkehrsmuster zwischen Zürich, Basel und St. Gallen signifikant?
+Hypothesen
+H1: An Regentagen sinkt das Veloaufkommen um mindestens 30 % gegenüber trockenen Tagen.
+H2: Der Veloverkehr zeigt an Werktagen ein bimodales Muster (Pendler), an Wochenenden ein unimodales (Freizeit).
+H3: Das Sommer-Winter-Verhältnis hat sich seit 2018 verringert (möglicher E-Bike-Effekt).
+H4: Der COVID-Lockdown 2020 führte kurzfristig zu höherem Veloanteil, der ohne Infrastruktur-Massnahmen nicht anhielt.
+Geplante Gliederung
+Empfehlung: Fokus auf Zürcher 15-Minuten-Zähldaten + MeteoSwiss Stundenwerte (Station Fluntern). Diese Kombination erlaubt zeitliche Musteranalyse, Wetter-Regression, COVID-Vergleich und Jahrestrends – alles mit einem einzigen pd.read_csv()-Aufruf pro Datensatz.
+--- TABLE ---
+Datensatz | Quelle / Portal | Zeitraum | Granularität | Format
+Velozählstellen Zürich | data.stadt-zuerich.ch | 2009–heute | 15-Min / Station | CSV
+Velozähldaten Basel | data.bs.ch (Dataset 100013) | 2000–heute | Stündlich | CSV / API
+Velozählungen St. Gallen | daten.stadt.sg.ch | 2011–heute | Stündlich + Tag | CSV / JSON
+MeteoSwiss Wetterdaten | data.geo.admin.ch (STAC API) | 1981–heute | Stündlich | CSV
+ASTRA Verkehrsunfälle | opendata.swiss | 2011–heute | Einzelereignis | CSV / GeoJSON
+COVID-Mobilitäts-Monitoring | opendata.swiss | Mär 2020+ | Täglich | CSV
+NABEL Luftqualität | bafu.admin.ch | 2000–heute | Halbstündlich | CSV
+--- TABLE ---
+1. Einleitung – Velopolitik CH, Fragestellung
+2. Daten & Methodik – Quellen, Bereinigung, Tools
+3. EDA – Zeitliche Muster, Wetter-Korrelation, Stationsvergleich, COVID-Analyse
+4. Ergebnisse & Diskussion
+5. Limitationen & Ausblick | Tech-Stack & Visualisierungen
+Python: pandas, matplotlib, seaborn, folium
+Kalender-Heatmaps (Tageswerte über Monate)
+Ridgeline-Plots (Stundenverteilung pro Saison)
+Scatter + Regression (Wetter vs. Aufkommen)
+Small Multiples (Stationsvergleich)
+Folium-Karten (Standorte, Unfälle, Heatmap)
+
+============================================================
+FILE: CPA-From-Data-to-Decisions-Guideline-Jan-2020.pdf
+============================================================
+--- PAGE 1 ---
+From Data to Decisions 
+A FIVE-STEP APPROACH TO DATA-DRIVEN DECISION-MAKING 
+Bernard Marr 
+What is the issue? 
+Too many organizations are drowning in data while thirsting for good  
+insights – insights that can help people within the company make quicker and  
+more informed decisions to drive optimal performance. 
+Why is the issue important? 
+From fnancial data to customer data to data generated from all our  
+connected and intelligent devices, organizations have access to more data  
+than ever before. In our increasingly data -driven world, an organization’s  
+success hinges on its ability to turn data into insights faster than the  
+competition, and to turn those insights into good decision -making. 
+What can be done? 
+This guide sets out a fve -step framework for data -driven decision -making,  
+providing a structured approach for turning data into evidence -based  
+insights and decisions. 
+Who is this guideline for and how can it be applied? 
+This guideline is directed primarily at practising CPAs in mid- to senior -
+level roles. This guideline is intended to provide a straightforward, adaptive 
+approach for CPAs to rethink how they approach and implement evidenced -
+based insights and decision -making within their organization.  
+The framework for data -driven decision -making can be applied by public,  
+private and non -proft organizations. 
+MANAGEMENT ACCOUNTING GUIDELINE GUIDELINE 
+1 
+--- PAGE 2 ---
+Overview 
+What’s inside? 
+This guideline discusses emerging industry trends and challenges as well as opportunities that 
+require organizations to manage big data and turn insights into data-driven decision-making.  
+A fve-step structured approach is provided as guidance for CPAs to: 
+1.  Defne objectives and information needs 
+2.  Collect data 
+3.  Analyse data 
+4.  Present information 
+5.  Make data-driven decisions 
+How emerging trends impact your business 
+A cursory glance into the operations of most organizations shows a common challenge, irre -
+spective of an organization’s size, industry or sector. The fact is, there is more data available 
+t
+han ever before, yet most organizations are struggling to capitalize on this data explosion. 
+We li
+ve in a world where data is being generated at a startling rate. Roughly every two days, 
+we create as much data as we did from the beginning of time until 2003. Almost everything  
+we do leaves a digital trace. 
+Most organizations struggle to turn this ever-expanding, fast-moving mass of data into the 
+critical knowledge needed to win in today’s fercely competitive and sometimes unpredict-
+able markets. This leads to the frustrating situation where many companies are data-rich but 
+insight-poor. 
+At the same time, there are pioneering organizations who are able to use data to improve their 
+competitive positions. These companies continually use the best and most appropriate data 
+to guide the decision-making process. That doesn’t just mean they have the technical ability 
+to collect and work with data in large quantities (although those abilities are important) – they 
+have also built competitive strategies around data-driven insights. In other words, data is at the 
+very heart of what they do. 
+D
+ata is not just fueling decision-making, though. It is also transforming the way forward-think -
+ing organizations operate, particularly in the form of automation and improved business 
+processes. In short, data has never been so important. Organizations of all shapes and sizes 
+must learn to harness the power of data, turning it into smarter decisions, more streamlined 
+operations and better business performance. Those who cannot achieve this will struggle to 
+thrive or even survive. 
+FROM DATA TO DECISIONS 
+ 
+2 
+--- PAGE 3 ---
+Introduction to the topic 
+The gold rush to the data rush 
+For a moment, let’s imagine that you are part of the California gold rush of 1849, where people 
+focked en masse to the state with the hope of making their fortunes from unearthing more of 
+the gold that had just been found there. 
+T
+housands of prospectors used their gold pans to sift out gravel, sand and sediment but 
+retained the heavier and valuable gold nuggets. By panning the endless tons of silt, the pros -
+pector hoped to fnd those few precious nuggets of gold that would make them rich. Some  
+did indeed become hugely wealthy. But most returned to their homes having either used up 
+their investments without an adequate (if any) return or, worse, having become bankrupt. 
+Fa
+st forward to today and replace the gold rush with the data rush. What we see are some  
+organizations behaving in very much the same way as the prospectors of old: they are panning  
+masses of data, with the hope that, somehow, they will discover those golden nuggets of infor-
+mation that will give them some valuable new insights. 
+Thanks to more than a decade of breathtaking advancements in computing technology, we 
+now live in a world in which data is abundant. The amount of data that organizations now 
+have access to each day is almost incalculable, as too is its value. Think of this data as the raw 
+material required for forming those “golden nuggets” of insights that enable managers and 
+leaders to make evidence-based decisions and, in turn, gain competitive advantages. Although 
+some organizations are indeed able to leverage their data successfully, most are not. 
+FROM DATA TO DECISIONS 
+ 
+3 
+--- PAGE 4 ---
+What is data-driven decision-making? 
+As the name suggests, data-driven decision-making simply means using good data, business 
+intelligence (BI) and analytics to fnd insights, and then acting on those insights to gain com-
+petitive advantages. It is built on the premise that the best decisions are those supported by 
+good data. 
+Why is data-driven decision-making relevant?  
+What makes organizations succeed in today’s competitive, unpredictable and digital world is 
+the ability to: 
+•  learn faster than the competition 
+•  act on data-driven insights in a way that drives competitive advantage 
+The fact is that the sheer volume and accessibility of data available to today’s organizations 
+provide an exciting resource. There is simply no excuse for organizations not to tap into this 
+valuable resource and boost their competitive position by: 
+•  aligning data with the organization’s strategic objectives 
+•  collecting the best available data to support the organization’s strategic information needs 
+•  analyzing this data to extract valuable insights 
+•  communicating the information in a way that allows people to act based on the insights 
+Although the idea of data-driven decision-making seems intuitive and straightforward, most 
+organizations seem to struggle with it in practice. Whether it’s the result of an inability to 
+fnd and collect the most relevant data among the overwhelming amount that is available, or 
+an inability to turn the data into insights that can be acted upon, too many organizations are 
+missing out on the possibilities that data-driven decision-making can deliver. 
+FROM DATA TO DECISIONS 
+ 
+4 
+--- PAGE 5 ---
+Defning key terms used throughout this guide 
+Data comes in a myriad of forms, including numbers, words, sounds and pictures. It can 
+mean the company’s own internal data (e.g., sales transactions) or external data (like 
+social media data). And it can be structured (i.e., data that can easily be organized, 
+often into rows and columns) or unstructured (i.e., data that cannot be easily organized, 
+such as Facebook status updates). 
+Information includes a collection of words, numbers, sounds, or pictures, but, crucially, 
+the information has meaning and context. This is what makes it diferent from raw data. 
+Knowledge is acquired when we take in and understand information about a subject, 
+which then allows us to make decisions and act on the information. We do this by using 
+rules about how the world works based on information we have gained from  
+past experiences. 
+B
+usiness intelligence  (BI) refers to technologies, applications, and practices for col -
+lecting, integrating, analyzing and presenting business information for meaningful 
+decision-making. 
+A
+nalytics means our ability to collect and use data to generate insights that inform 
+fact-based decision-making. Given today’s data is often too “messy” for traditional BI 
+approaches, new analytics techniques (e.g., artifcial intelligence and machine learning) 
+have evolved to help us make sense of huge volumes of unstructured, complicated data. 
+Artifcial intelligence (AI)  revolves around the central concept of building machines that 
+are capable of “thinking” and acting in ways that seem intelligent. Chat bots, virtual 
+assistants (e.g., Amazon’s Alexa) and self-driving cars are all examples of AI technology 
+in action. 
+Machine learning is a leading-edge approach to AI. It refers to machines’ ability to learn 
+from data (like humans do), so that they can refne their actions and decisions based on 
+what they have learned. 
+The Internet of Things (IoT) describes the fact that many everyday objects now have 
+the ability to send and receive data via the internet. A smartphone syncing photos with 
+a computer is one very simple example of the IoT in action, but the enormous range 
+of “smart” devices and machines now extends to connected cars, ftness bands, smart 
+watches and even smart yoga mats. 
+FROM DATA TO DECISIONS 
+ 
+5 
+--- PAGE 6 ---
+What is RAISE and how it applies to data-driven  
+decision-making 
+CPA Canada’s RAISE philosophy is founded on the premise that companies need to be 
+Resilient, Adaptive and  Innovative to be  Sustainable  Enterprises. The RAISE philosophy can 
+help guide an organization to sustainable success, and data-driven decision-making is going  
+to help with all aspects of that. 
+In today’s fast-paced world, organizations must be resilient and adaptive. This means they must 
+respond quickly, make the best decisions possible and change course if necessary. Data-driven 
+decision-making ensures that these decisions can be taken in near real-time, that the decisions 
+are grounded in real facts (rather than guess work) and that they lead to actions that ensure an 
+organization stays adaptive. 
+On top of that, organizations that use data to inform their decisions are more likely to innovate. 
+A data-driven understanding of your business and your customers will help you innovate and 
+fnd the right customer oferings and business processes that will drive future success. 
+T
+ogether, data-driven decision-making enables organizations to become more resilient, adap -
+tive and innovative, which in turn will make them more sustainable. 
+FROM DATA TO DECISIONS 
+ 
+6 
+--- PAGE 7 ---
+How CPAs add value 
+CPAs in business are important custodians of organizational data. A working knowledge of 
+data-driven decision-making (including the use of BI reporting and data analytics) will help to: 
+• broaden professional accountants’ scope
+• move them beyond the analysis of quantitative information only to using all forms of data.
+This will then result in better organizational decisions. 
+Professional accountants play a critical role in data-driven 
+decision-making. Over recent years, management’s infor-
+mation requirements have expanded massively in terms of 
+t
+he range of data, level of analysis and expected presen-
+tation format. BI and analytics vendors have responded 
+by developing accounting applications to integrate into 
+organization-wide BI and analytics oferings. 
+As t
+he feld of data-driven decision-making widens, there 
+is a huge opportunity for professional accountants to pro -
+vide better, richer information and analysis that supports 
+d
+ecision-making throughout the organization. 
+Th
+is ties in with the skills and expertise of the accounting 
+profession in three key ways: 
+1. Enabling value through strategic analytics. Professional accountants play an important  
+role i
+n recommending appropriate performance measurements, as well as aligning systems
+and processes to access, analyze and convert the data into valuable information for timely
+decision-making.
+2. Reporting value through the efective presentation of information. Professional accoun -
+tants develop and present fnancial and non-fnancial information to senior management
+for use in organizational decision-making. Proper presentation of this information is critical
+to the success of the organization in making correct decisions.
+3. Providing governance through developing new data standards and real-time key per -
+formance indicators.  T
+ rust and integrity are core attributes of professional accountants.
+These attributes will provide a strong basis for positioning professional accountants as
+data governance leaders in the organization. Appropriate data governance will allow the
+organization to make data-driven decisions, with the assurance that the data supporting
+those decisions are accurate.
+FROM DATA TO DECISIONS 
+ 
+7 
+--- PAGE 8 ---
+Making data-driven decisions.  This step concerns turning information 
+into decisions, which means making sure the available information 
+results in action. Successfully turning information into decisions 
+requires a culture shift, from making decisions based on assumptions 
+or gut instinct to making decisions that are frmly rooted in data-driven 
+insights. 
+Step 1 
+Step 2 
+Step 3 
+Step 4 
+Step 5 
+ 
+ 
+ 
+Defning objectives and information needs.  This step is about answer-
+ing the questions, “What are our strategic aims?” and “Based on those 
+aims, what do we need to know?” This vital frst step ensures we clearly 
+articulate the real information needs of your organization, and clarify 
+who needs to know what, when and why. 
+Collecting data.  This stage centers on gathering and organizing the 
+right data. The emphasis here is on fnding meaningful and relevant data 
+to meet the information needs identifed in Step 1. Organizations need to 
+either: 
+• assess whether the required data is already held somewhere in the 
+organization 
+• identify the best way to collect the data 
+Analyzing data. Once the right data has been collected, it must be 
+turned into insights. To do this, the data must be analyzed to extract 
+information. 
+Presenting information. This step is about communicating the infor-
+mation extracted in Step 3. The focus here is on getting the right 
+information, in the right format, to the right people, at the right time. 
+FROM DATA TO DECISIONS 
+ 
+Process 
+There are fve steps for efectively deploying data-driven decision-making, as shown in  
+Figure  1. 
+FIGURE 1 
+8 
+--- PAGE 9 ---
+Each of the fve steps are explored in more detail in this guideline. 
+In addition to these fve steps, there is a feedback loop between the last and the frst steps. 
+After the right decisions have been made, those decisions and actions will, in turn, inform 
+future information needs. 
+Even though it is not a step in its own right, there is also a sixth component present in the 
+framework – IT infrastructure, analytics and data visualization tools as enablers. IT and data 
+tools play a crucial role in data-driven decision-making. They are critical enablers of the data 
+collection process, data analysis, and presentation and dissemination of information. 
+FROM DATA TO DECISIONS 
+ 
+9 
+--- PAGE 10 ---
+Applying the topic   
+to your organization 
+Defning objectives and information needs 
+Successfully navigating Step 1 requires careful answering of one key question: 
+“What do we need to know?” In most organizations, the use of data and 
+analytics is driven more by the information that is available than by the infor-
+mation needed to make essential organizational decisions. This is clearly back 
+to front. Efective decision-making should be driven by the information needs 
+of the decision makers. In essence, this means identifying the information they need and then 
+applying data and analytics to meet those needs. 
+There are two approaches to serving decision makers, and both approaches must work hand in 
+hand if data-driven decision-making is to become part of the organization’s DNA: 
+1.  Top-level information needs: Working with the leadership team to identify the strategic 
+information needs and frame data questions for the organization as a whole, based on the 
+company’s strategy, as well as to foster a culture of data-driven decision-making across 
+the business. Buy-in and support “from the top” also sets the tone for the organization in 
+ensuring that their data / decision-making needs are met. 
+2.  Democratization of data-driven decision-making:  Serving the department heads and  
+managers throughout the organization who increasingly need access to more data analysis 
+to efectively perform their jobs. Instead of business analysts and IT departments con-
+trolling data, organizations must give all employees access to data so they can interrogate 
+it themselves – albeit with some guidance, training, and ongoing support from analysts to 
+help guide the process, defne information needs and deliver the right answers. Walmart’s 
+Data Café provides an excellent example of this democratization of data (refer to the 
+accompanying case studies, “From Data to Decisions: Data-Driven Decision Making in 
+Practice”). 
+Both elements – the top-level information needs and the democratization of data-driven decision  
+-making – are about getting everyone in the company using data more regularly to inform 
+business decisions.  
+Here are the key steps involved in this stage of the process. 
+Linking data to strategy 
+First, it is vital that we link the data that organizations collect to strategy and the key drivers of 
+value and performance. Because of the sheer volume of data that is available today, organiza -
+tions that do not link their data needs to the company’s overall strategic objectives risk being 
+Step 1 
+FROM DATA TO DECISIONS 
+ 
+10 
+--- PAGE 11 ---
+paralyzed by information overload or, worse, wasting time and money collecting and analyzing 
+data that is irrelevant. 
+By ensuring data is linked to the organization’s strategic needs, we can frame questions in  
+a more fo
+cused, data-driven way. We can therefore ensure the data collected is: 
+•  relevant to the organization’s competitive positioning and critical objectives 
+•  suppor
+ting the organization’s greatest information needs 
+•  focused on must-know, business critical information – not wasted on irrelevant “interesting 
+to know” issues 
+One very efective way to articulate a strategy is using a strategy map. This allows organi-
+zations to express their strategy on a simple one-page document that can then be used to 
+anchor any future data requirements. For practical guidance on developing a strategy map 
+for an organization, refer to the CPA Canada MAG “Strategy Mapping – A Six-Step Process 
+– Guideline.” 
+Identifying who needs the information  
+The second phase is to identify who needs the information. In other words, who is the target 
+audience or information customer? As mentioned, information customers fall into two camps: 
+1.  the leadership team that is making big-picture strategic decisions 
+2.  t
+he business units and managers who are helping to deliver the organization’s strategic 
+objectives 
+Diferent audiences have vastly diferent needs, even in relation to a single strategic objective, 
+so it’s important to clarify who requires the information at this early stage. For example, the 
+leadership team of a supermarket may need to know which product categories are most prof-
+itable for the business. Meanwhile, a store manager may need to know why a certain product 
+within that highly proftable category isn’t selling in their particular store. 
+Clarifying what questions they want answered 
+Next, we must identify exactly what questions the target audience wants answered. Often, 
+however, information customers may not fully know their exact requirements. A powerful tool 
+for guiding information customers through this process is to formulate key analytics questions 
+(KAQs). In essence, a KAQ makes sure we know what it is that we want to know – that we are 
+drilling down to the precise questions that need answering. 
+KAQs should focus on the present or the future (not the past), and link to the goals and desired 
+ta
+rgets of your organization’s strategy map. For example, ask, “How efective are our attempts 
+to increase our market share?” instead of “Has our market share increased?” By focusing on the 
+future, we open up a dialogue that allows us to “do” something about the future. We then look 
+at data in a diferent light, trying to understand what the data means for the future. This helps 
+with data interpretation, and ensures we collect data that helps to inform our decision-making. 
+FROM DATA TO DECISIONS 
+ 
+11 
+--- PAGE 12 ---
+Examples of data-driven decisions 
+•  Which customers to target. 
+•  Ho
+w best to redesign the website. 
+•  Which element of branding to invest in. 
+•  How best to price and package service oferings. 
+•  The best route for delivery trucks. 
+•  Which part of the production process to optimize. 
+•  Which people to recruit. 
+•  Which element of learning and development to invest in. 
+FROM DATA TO DECISIONS 
+ 
+Understanding what decisions need to be taken  
+Although KAQs narrow the possible data that can be used, it still leaves many data sets to 
+choose from. An efective way to narrow the range of possible indicators is to identify what 
+decisions the data would support. 
+By articulating both the questions and decisions that the data will help to address, it is possible 
+to reduce the potential number of indicators from an almost endless number to a smaller, more 
+focused data set. 
+Examples of KAQs 
+•  To what extent are we growing proftably? 
+•  To wh
+at extent are we retaining our most proftable customers? 
+•  What do our customers really think about our product, service or brand? 
+•  What are they key inefciencies in our most important processes? 
+•  How well are we communicating within our organization? 
+•  What are the most valuable competencies for new managers? 
+•  How engaged are our employees? 
+•  How do people inside and outside the organization perceive our employer brand? 
+12 
+--- PAGE 13 ---
+Collecting data 
+Once the strategic information needs are clear, the right data (in the right 
+quantity) needs to be collected to support decision-making. 
+Today, data means more than numbers in a spreadsheet. Data encompasses 
+email
+s, tweets, telephone calls to a helpdesk, CCTV video footage, credit card 
+transactions, GPS information and so much more. Consequently, it is important to become 
+familiar with the many diferent data options available. 
+Supporting internal data with external data 
+Too many organizations rely heavily on internal data, when they should be looking to supple-
+ment their internal data with relevant external data: 
+•  I
+nternal  d ata  refers to all the information an organization currently has or has the potential 
+to collect. Some of the most common examples of internal data include customer and 
+employee survey data, sales data, fnancial data, HR data, customer records, stock control 
+data, and website activity data. 
+•  External data is the infnite array of information that exists outside of the organization. The 
+data may be publicly available (e.g., government census data, crime statistics, social media 
+data or weather data) or privately owned data from data brokers (e.g., Acxiom, Nielsen, 
+Experian, Equifax and Corelogic) that sell various types of data – from credit scores to  
+consumer preferences. In addition to data brokers, many other companies (e.g., social 
+media companies, fnancial services frms or telecom companies) are now ofering data. 
+F
+or example, a football team wanted to understand more about their customers. Their internal 
+ticket sales data only gave them the address of the person who purchased the tickets but  
+nothing about who actually attended the game, where they came from, when they travelled,  
+and where they went before and after the game. This changed when the company bought data 
+from a telecom company that was able to trace visitors within the stadium and provide ano
+-
+nymized and aggregated insights into their movements before and after the game. 
+Balancing structured data with unstructured data 
+Structured data is any data that is located in a fxed feld within a defned record or fle, usually 
+in databases or spreadsheets. Essentially, it is data that is organized in a predetermined way, 
+usually in rows and columns. While this data is certainly valuable (think of the vast amounts  
+of structured transactional data available to retail giants like Walmart), it often presents just  
+a limited glimpse of what is going on. 
+Unstructured data is any data that does not ft into traditional structured formats. This rep-
+resents the vast majority of the available data in the world and can often be rich in insights. 
+Examples include email conversations, website text, social media posts, video content, photos 
+and audio recordings. 
+Like internal and external data, it is the combination of structured and unstructured data that 
+tends to deliver the most useful insights for decision-making. 
+Step 2 
+FROM DATA TO DECISIONS 
+ 
+13 
+--- PAGE 14 ---
+Identifying data collection formats 
+There are many diferent data formats, but they can be broadly categorized as follows: 
+•  Activity data describes the computer record of our actions, whether they occur online or 
+ofine – giving us an indication of what people really do (as opposed to what they say they 
+do). Examples of activity data include browsing a website, “liking” something on Facebook 
+or physically walking around a store. 
+•  Conversation data covers any conversation in any format, whether verbal or written. 
+This type of data is particularly valuable because it provides insights on how happy (or 
+otherwise) people are. Examples include text messages, instant messages, emails, blog  
+comments, social media posts, survey responses and telephone calls. 
+•  Photo and video data refers to any kind of image data, from CCTV footage to photos 
+posted on Instagram. It can be used to identify individuals and their behaviour patterns,  
+or to identify certain products or brands in images. 
+•  Sensor data is being generated at an incredible rate, thanks to the proliferation of IoT-
+enabled “smart” devices and sensors being increasingly built into products and machines. 
+Examples include data from smart TVs, wearable devices, sensors in production machinery 
+and vehicle sensors. 
+Data can be collected automatically (through web activity logs or sensors) or manually 
+(through surveys, focus groups, performance reviews, interviews and so on). 
+Considering data privacy 
+With data also comes the responsibility to keep that data safe, especially when the data 
+is personally identifable or private in nature. Many places around the world are currently 
+tightening their data privacy laws. For example, Europe now has the General Data Protection 
+Regulation (GDPR), which requires any company (anywhere in the world) that holds data about 
+any citizen of a European Union country to comply with their strict regulations. For example, 
+GDPR stipulates that companies require explicit consent to collect any personal data as well 
+as permission to analyze and use that data. Also, individuals can request for their data to be 
+deleted at any time. It is therefore a good idea to check any legal requirements and regulations 
+before collecting any data. Key advice to any organization is to be transparent about what data 
+is being collected and for what purpose. Over time, this will build the trust customers require to 
+know that their data is safe with your organization. 
+Considering data ownership 
+As data is becoming an increasingly important business asset, it is also important that com -
+panies ensure they own the data or at least have access rights to data that is essential for 
+their decision-making. Some companies have developed their data strategy with critical data 
+sets owned by third-party providers that could stop the company from accessing it at any 
+point. Companies should ensure they own the rights to data and have the correct contractual 
+arrangements in place to access data collected by data suppliers and third-party companies. 
+FROM DATA TO DECISIONS 
+ 
+14 
+--- PAGE 15 ---
+Planning data collection 
+Collecting data typically involves the following steps: 
+1. Decide on the data source and collection method. At this stage, it is crucially important
+to th
+ink about access to data and answer questions such as, “Is the data readily available?”
+If the ideal data is not available or needs to be supplemented with more evidence, new
+data must collected. 
+2. Decide when the data will be collected, and in what sequence and frequency. It is
+important to determine when and how often the data should be collected. Some data sets
+are collected continuously, others hourly, daily, monthly or even annually. There is no rule
+of thumb here, so the right frequency is the one that provides sufcient data to answer 
+the KAQs and support decision-making.
+3. Decide who is responsible for collecting the data. Here, we identify who is responsible 
+for data collection and data updates. The person responsible for data collection could be
+an internal person or function within the organization or, increasingly, it can be external
+agencies. Many organizations outsource the collection of specifc data (e.g., customer 
+or employee surveys) or pay to access third-party data (e.g., social media data).
+Analyzing data 
+After ensuring we are collecting the right data, we need to turn this data
+into insights that can inform decision-making. Analytics is what allows us 
+to extract insights from data. In most cases, analytics involves using soft-
+ware-based algorithms and analytic tools that employ one or more of the 
+analytics techniques listed in this section. 
+Data analytics is advancing at a rapid pace, thanks largely to the ever-increasing volume and 
+variety of data that is now available to us. Previously, when we wanted to analyze data, it 
+had to be contained in structured databases or spreadsheets. Anything that did not ft that 
+neat and orderly structure was near-on impossible (or, at least, prohibitively expensive and 
+time-consuming) to work with. Now, it is possible to work with nearly any kind of data; what 
+was previously seen as unmanageable is now more easily leveraged to aid decision-making. 
+Advances in data storage techniques (particularly cloud storage) and computing power are 
+also fueling these leaps in analytic technology. 
+Looking at the diferent analytics options 
+There are too many analytics techniques to provide an exhaustive list here, but the following 
+are some of the more common techniques used by organizations: 
+• Correlation analysis is a s
+ tatistical technique used to determine whether there is a 
+relationship between two separate variables, and how strong that relationship may be 
+(e.g., analyzing the relationship between customer proftability and customer loyalty).
+Step 3 
+FROM DATA TO DECISIONS 
+ 
+15 
+--- PAGE 16 ---
+•  Regression analysis is a nother statistical tool, this time used to investigate the relationship 
+between variables (e.g., whether there is a causal relationship between price and product 
+demand). To clarify the diference between correlation and regression analysis: regression 
+analysis identifes the relationships between two variables and plots the course of that 
+relationship, while correlation analysis explores the strength of that relationship. 
+•  Data mining is an analytic process designed to explore very large data sets to uncover 
+interesting but previously unknown patterns, relationships or anomalies. 
+•  Text analytics refers to the process of analyzing text – be it emails, reports, customer 
+records and communications, blogs, social media posts, or any other kind of text – for 
+insights. It can be especially helpful for understanding more about the organization’s 
+customers or employees from looking at social media posts or survey feedback. 
+•  Image analytics  is the process of extracting information from images (e.g., photographs or 
+medical scan images). As a process, it relies heavily on sophisticated pattern recognition, 
+and it can be used for facial recognition and recognizing specifc products or brands. 
+•  Video analytics , or the process of extracting information from video footage, is very  
+similar to image analytics, except it can also be used to measure and track things like the  
+behaviour of people over the time of the footage. 
+•  Sound and voice analytics refers to extracting information from audio recordings of 
+soundscapes or conversations. It can be used to analyze the sounds, and it understand  
+topics or actual words and phrases being used, which makes it useful for highlighting 
+recurring themes or issues that crop up in conversations (e.g., helpdesk calls). 
+•  Sentiment analysis  involves extracting subjective opinion or sentiment from text, audio 
+or video data to understand whether stakeholders feel positively, negatively or neutrally 
+about a particular product, service, brand or business. 
+•  AI and advanced analytics encompasses technologies like AI and machine learning, where 
+computers crunch through data and then decide the best course of action based on the 
+data. In other words, thanks to self-learning algorithms, machines now have the ability to 
+learn from the data they are given and decide what to do next. Sometimes machines may 
+prompt some sort of human action, but increasingly computers are able to carry out the 
+interventions autonomously.  
+•  Augmented analytics  with the advances of AI make it possible to automatically generate 
+insights from data. Algorithms can scrub and analyze raw data and even efectively com-
+municate the insights so that humans can understand them. 
+Combining analytics for maximum efect 
+It is important to note that the value of analytics often does not lie in one single analytic tool or 
+technique. The most valuable insights are often identifed through the combination of diferent 
+analytics techniques. For example, correlation and regression analyses might show that the 
+most loyal customers are also the most proftable. Text and sentiment analysis of customer 
+surveys as well as voice analytics from customer call conversations could be used to identify 
+FROM DATA TO DECISIONS 
+ 
+16 
+--- PAGE 17 ---
+the key factors for customer loyalty. AI and augmented analytics could then be used to auto -
+matically identify loyal customers and the factors that seem to make them more loyal. 
+Presenting information  
+When analyzing data, it is crucial to keep the target audience(s) and their 
+specifc needs in mind. After all, organizations gain competitive advantage 
+when the right information is delivered to the right people at the right time. 
+It is crucial that the information presented is relevant and meaningful to  
+that audience. There are three key elements to making sure data is relevant to the people 
+receiving it: 
+1.  Finding the right reporting frequency.  After all, a great indicator is of little use if that 
+information gets to its audience too late for timely decision-making. 
+2.  Determining which outlets, reports or tools will be used to communicate the data. Data  
+sets might, for example, be included in the quarterly performance report to the board, 
+the weekly performance reports for department heads or a reporting dashboard for line 
+managers.  
+3.  Deciding how best to present the data. For example, data can be shown as a number, 
+narrative, table, graph or chart. In any case, it is crucial the presentation is clear, informa -
+tive and compelling for the target audience. 
+Often, the most efective way to communicate data in a clear, informative and compelling way 
+is to combine a number of diferent presentation formats into the report / dashboard to tell a 
+“story” with the data (e.g., a chart may be supported by narrative text). 
+Here is how to tell a story with data. 
+Starting with the question 
+When displaying information, it is a good idea to start with the question (KAQ outlined above) 
+the data is aiming to answer (e.g., “How engaged are our employees?”). This provides context 
+for the information that follows. It also helps to ensure the data is laser-focused on meeting the 
+information needs of the target audience, thus avoiding any inclination to focus on “interesting” 
+rather than “valuable” information. 
+Using headlines  
+A good report or dashboard should use headlines. A headline summarizes the main fnding 
+from the data so that users don’t have to go into the detail to get the main insights. If the 
+KAQ was to look at employee engagement, the headline could say something like “Employee 
+engagement has improved signifcantly over the past year” or “Over the past three months,  
+we have seen a 25% drop in employee engagement.” 
+Step 4 
+FROM DATA TO DECISIONS 
+ 
+17 
+--- PAGE 18 ---
+Using efective visuals 
+The KAQ may be followed by a meaningful visual (e.g., chart, graph, table or infographic) that 
+highlights the most important facts that help to answer the KAQ. Visuals are great for convey -
+ing information because they are quick and direct, memorable, and easy to understand. 
+Here are some generic tips for producing efective visuals: 
+•  Keep them simple and focus on the message the user needs to receive. 
+•  Rarely use emphasis colours (e.g., bright red, yellow, orange or green) and only where it is 
+important to highlight specifc issues. 
+•  Do not use too many diferent varieties of graphs, because an analysis across diferent 
+graphs is difcult. 
+•  Try to avoid any unnecessary decorations, background colours and so on. Any additional 
+and unnecessary elements just distract the reader, making it harder to extract insights. 
+Many of today’s commercially available analytics tools (e.g., Tableau, Qlik or Microsoft Power 
+BI) come with a reporting element that can visualize data in a simple, efective way. 
+Using narratives to support visuals 
+A narrative expands on the headline and provides context and meaning to the data that is 
+represented in the graph or data visualization. For instance, a graph containing past perfor -
+mance is extremely useful for analyzing trends over time, but a narrative can put the graphical 
+i
+nformation into context, explaining why the trend is as it is. Going back to the employee 
+engagement examples, the narrative could explain the key reasons why employee engagement 
+might have increased or gone down. 
+Getting the most out of self-service tools 
+Traditional self-service dashboards continue to be an important means for organizations 
+to present data to those who need it. However, for users to really get the most out of any 
+dashboard, it must be packaged in a way that makes the data easy to understand, combining 
+visuals, narrative summaries and headlines wherever possible. 
+An ideal dashboard would allow the user to manipulate data, slicing and dicing it in the way 
+they need, and then present them with meaningful visuals and supporting narrative that 
+answers their question. For this to happen, the dashboard must be designed by someone  
+who understands both the analytics and storytelling aspects. 
+What’s next for data visualization and communication? 
+This is an area that is developing all the time, and we can expect data visualization and com -
+munication to change drastically over the coming years. Natural language processing is one 
+particularly exciting area since it allows users to ask questions of their data. So, rather than 
+having to manually manipulate data themselves, users can have a conversation with their  
+FROM DATA TO DECISIONS 
+ 
+18 
+--- PAGE 19 ---
+Six common mistakes in communicating  
+and presenting data 
+Poor data communication and visualization can lead to key messages going unnoticed, 
+which, in turn, can lead to poor decision-making. Here are six of the biggest data com -
+munication mistakes to avoid: 
+•  Not linking communication to strategy and information needs. Because, if you 
+aren’
+t clear on what people need to know, how can you present that information  
+in the best way? 
+•  Not tailoring the presentation method to the audience. It is vital to understand 
+how the audience intends to use the data, so that the presentation can be tailored 
+accordingly. 
+•  Burying key points in reams of text. Headlines and visuals should be used to 
+highlight the key messages that should inform decision-making. 
+•  Not using supporting narrative. While we want to avoid overly long text, a small 
+amount of supporting narrative ensures everyone understands the message in the 
+same way. 
+•  Having a cluttered, busy dashboard. Too many indicators on one screen can lead 
+to information getting lost. 
+•  Using too many colours.  Colour should be used sparingly to avoid distracting the 
+audience from the core messages. 
+Making data-driven decisions  
+Organizations where decisions are frmly rooted in data have the clear 
+competitive advantage. This fnal step looks at how to turn information into 
+smarter business decisions. 
+No matter how insightful or compelling the information, it is of little value unless it is turned 
+into action. In other words, if knowledge is not turned into action, then the entire efort 
+expended in the previous four steps has been a pointless exercise and a waste of resources. 
+Decisions must be made and acted upon to improve performance and help deliver the organi-
+zational strategy. 
+Step 5 
+FROM DATA TO DECISIONS 
+ 
+data and ask questions like, “Who are my most proftable customers?” The system will then 
+speak back or present the appropriate data to deliver a meaningful answer to the question. 
+Furthermore, virtual reality and augmented reality visualization tools will allow us to “step 
+inside” and really immerse ourselves in data. This could be a game-changer for very complex 
+or large data sets that are currently too difcult to report on using standard tools. 
+19 
+--- PAGE 20 ---
+Creating a data-driven culture 
+When implementing data-driven decision-making, the organization must create a culture that 
+is conducive to transforming knowledge into action. This means creating a culture where data 
+is valued, where people want to see data rather than talk about assumptions or “how we’ve 
+always done it,” and where good reporting is available to those who need it, when they need it. 
+The following seven steps will help organizations foster a data-driven culture: 
+1.  Encourage a passion for learning and improvement.  Th
+ e most important ingredient, 
+which is why it is the frst on the list, is to create an organization-wide passion for learning 
+and improvement, for creating efciencies, and for embracing new technologies and 
+processes. Good data can inform these improvements at every level of the business. 
+2.  Ensure leadership buy-in.  To make data-driven decision-making a reality, senior buy-in 
+and support is critical. If the senior leadership team does not appreciate the value of 
+data as the foundation of good decision-making, it is very difcult to efect real change 
+throughout the rest of the organization. Real-life examples of how other organizations have 
+harnessed the power of data to gain a competitive advantage can be powerfully persuasive 
+here. 
+3.  Develop widespread analytical capabilities throughout the organization.  Data-driven 
+decision-making is not possible without the competencies and skills that turn data into 
+insights. Clearly this means investing in analytics training and expertise (or partnering 
+with an external provider who already has these in spades), but it is also about promoting 
+data literacy right across the organization. Everyone at every level should be aware of the 
+importance of data and how it should be used. 
+4.  Build appropriate IT infrastructure. You can have a wealth of analytical intentions and 
+skills, but you also need the tools to put them into practice. Organizations need the right IT 
+infrastructure to collect, store and analyze the data, as well as the means to share that data 
+and make it accessible to those who need it. Where investing in in-house infrastructure is 
+not an option, there are many third-party providers ofering relatively inexpensive access 
+to of-the-peg data analytics and communication tools. Even organizations on moderate 
+budgets can now access cloud storage and analytics-as-a-service oferings that provide 
+hosted and managed infrastructure. 
+5.  Use judgment.  To really get the most out of analytics, employees at all levels must balance 
+facts with judgment. The goal is to back up decisions with hard data – not at the expense 
+of, but rather alongside, individual experience and knowledge. 
+6.  Share information.  For data-driven decision-making to be efective, the message has to 
+get out, loud and clear, that information belongs to the organization, and that all employ-
+ees should be focused not on the information’s ownership but on working together to 
+create the richness of diferent perspectives that can turn this information into “golden 
+nuggets” of actionable knowledge. A good way of creating this culture is by establishing 
+a shared data repository (e.g., a common data lake or a BI platform) that accesses data 
+sources across the business.  
+FROM DATA TO DECISIONS 
+ 
+20 
+--- PAGE 21 ---
+7.  Recognize and reward data-driven decision-making. Organizations should look to weave 
+in so
+me form of supporting reward strategy, as it is important to recognize and reward 
+attempts to base decisions on data. This will show that the organization takes the approach 
+seriously and values those trying to make it a practical reality. This can start with a simple 
+“thank you” and sharing of success stories. 
+People and machines working together to make better decisions 
+The explosion in data, and particularly the developments around AI and automation, have 
+created a narrative of man versus machine among some people. Yet, the goal of data-driven 
+decision-making is not to abdicate all decision-making responsibilities to computers or to imply 
+that there is no place for humans in the decision-making process. Rather, this is about humans 
+and machines working together in a process of joint decision-making. 
+W
+e have come a long way since IBM’s Deep Blue chess-playing computer beat Garry Kasparov 
+in a chess game in the 1990s. Now, hybrid chess teams made up of people and AI systems  
+appear to have the edge over people-only and machine-only teams. This indicates that a com -
+bination of human and computers – where machines help humans make better decisions – is  
+the optimum solution. This collaborative approach must become part of the very fabric of the 
+organization if data-driven decision-making is to succeed. 
+FROM DATA TO DECISIONS 
+ 
+21 
+--- PAGE 22 ---
+Key learnings 
+What makes organizations succeed in today’s competitive and unpredictable world is the 
+ability to learn and act faster than the competition. The framework outlined in this guideline  
+is designed to help organizations do exactly that. 
+The tips and tools presented as part of the 
+fve-part model should enable organiza -
+tions to become more data-driven in their 
+decision-making and avoid the traps of 
+making decisions based on gut instinct  
+or dangerous half-truths. 
+We are on the verge of an exciting trans-
+formation in business. There is more data 
+available than ever and we are constantly 
+fnding exciting new ways to extract nev-
+er-before-seen insights from data. This is 
+allowing businesses of all shapes and sizes, 
+across all kinds of industries, to make better 
+decisions, drive performance and boost 
+their competitive position. By aligning data 
+with strategy, collecting the best available data, analyzing this data to extract valuable insights 
+and communicating the information in a way that allows people to act on these insights, any 
+organization can achieve better results. 
+The power of data is so great that, within a few years, we may no longer need to refer to 
+“data-driven decision-making”: data will be at the core of all business decisions. It will become 
+second nature. Organizations that can get ahead of the curve and implement this fve-step 
+framework for improved decision-making will have an even bigger competitive advantage  
+in a data-driven world. 
+FROM DATA TO DECISIONS 
+ 
+22 
+--- PAGE 23 ---
+Resources 
+Also by Bernard Marr: 
+•  Artifcial Intelligence In Practice: How 50 Companies Used AI and Machine Learning To 
+Solve Problems, 2019, Wiley 
+•  Big Data in Practice: How 45 Successful Companies Used Big Data Analytics to Deliver 
+Extraordinary Results 
+•  Big Data For Small Business For Dummies 
+•  Big Data: Using Smart Big Data, Analytics and Metrics to Make Better Decisions and 
+Improve Performance  
+•  Data-Driven HR: How to Use Analytics and Metrics to Drive Performance 
+•  Data Strategy: How to Proft From a World of Big Data, Analytics and the Internet of Things 
+•  How to develop a data strategy:  With handy template:  
+www.bernardmarr.com/default.asp?contentID=1838  
+•  Key Business Analytics: The 60+ Tools Every Manager Needs to Turn Data Into Insights 
+•  Key Performance Indicators For Dummies 
+•  Key Performance Indicators: The 75 Measures Every Manager Needs to Know  
+FROM DATA TO DECISIONS 
+ 
+23 
+--- PAGE 24 ---
+About the author 
+Bernard Marr 
+Bernard Marr is an internationally bestselling author, popular keynote speaker, futurist, and  
+strategic business and technology advisor to governments and companies. Through his orga-
+nization Bernard Marr & Co., he helps companies improve their business performance, use data  
+m
+ore intelligently and understand the implications of new technologies, such as AI and big data.  
+Be
+rnard is a frequent contributor to the World Economic Forum, writes a regular column for 
+Forbes and is the author of 15 books, including the international bestsellers Data Strategy , Big  
+Data in Practice and  Key Business Analytics. Bernard’s books have been translated into over 20 
+languages and have earned accolades such as the CMI Management Book of the Year award, 
+the Axiom book award and the WHSmith best business book award. 
+LinkedIn has ranked Bernard as one of the world’s top fve business infuencers, and every 
+day he actively engages his 1.5 million social media followers and shares content that reaches 
+millions of readers. 
+Find out more at 
+www
+.bernardmarr.com or email hel
+lo@bernardmarr.com. 
+FROM DATA TO DECISIONS 
+ 
+24 
+--- PAGE 25 ---
+cpacanada.ca/MAGs 
+
