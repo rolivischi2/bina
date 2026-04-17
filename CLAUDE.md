@@ -4,14 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-University semester 2 BI-Projekt (Business Intelligence & Analytics) analyzing bicycle traffic in Swiss cities (Zürich, Basel, St. Gallen). Exploratory data analysis with Python, investigating temporal patterns, weather correlation, COVID impact, and inter-city differences.
+University semester 2 BI-Projekt (Business Intelligence & Analytics) analyzing bicycle traffic in Zürich. Exploratory data analysis with Python, investigating temporal patterns, growth hotspots, and demand ranking.
 
 ## Environment
 
 - **Conda env:** `bina` (defined in `environment.yml`)
 - **Activate:** `conda activate bina`
 - **Run notebooks:** `jupyter lab` or `jupyter notebook`
-- **Key packages:** pandas, numpy, matplotlib, seaborn, folium, scipy
+- **Key packages:** pandas, numpy, matplotlib, seaborn, folium, scipy, plotly, pyproj
 
 ## Data Sources
 
@@ -20,17 +20,12 @@ All CSVs are downloaded into `data/` (gitignored). Notebook `01_data_acquisition
 | Dataset | Source | Format |
 |---------|--------|--------|
 | Zürich velo counts (15-min) | data.stadt-zuerich.ch | CSV per year |
-| Basel velo counts (hourly) | data-bs.ch | CSV (semicolon-delimited) |
-| St. Gallen velo (daily) | daten.stadt.sg.ch | CSV (semicolon-delimited) |
-| MeteoSwiss weather (hourly, station SMA/Fluntern) | data.geo.admin.ch STAC API | CSV |
 
 ## Research Questions (Forschungsfragen)
 
-- FF1: Temporal patterns (time-of-day, weekday, season)
-- FF2: Weather influence (temperature, precipitation, wind)
-- FF3: COVID-19 impact on cycling
-- FF4: Inter-city comparison (ZH vs BS vs SG)
+- FF1: Temporal patterns & demand ranking (time-of-day, weekday, season)
+- FF2: Growth hotspots (which stations show strongest growth trends 2020-2025?)
 
 ## Notebook Structure
 
-Notebooks are numbered sequentially: `01_data_acquisition`, `02_...` etc.
+Notebooks are numbered sequentially: `01_data_acquisition`, `02_data_cleaning`, `03_ff2_growth_hotspots` etc.

@@ -12,5 +12,7 @@ dependencies:
   - folium
   - scipy
   - requests
+  - plotly
+  - pyproj
   - openpyxl
   - pip
