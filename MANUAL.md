@@ -234,6 +234,18 @@ Coordinates are converted from Swiss LV95 (EPSG:2056) to WGS84 with
 `pyproj.Transformer`. Zoom on the map; circles are geographic so they
 scale with the basemap, no recalculation needed.
 
+**Rendering in VSCode:** the cell writes the map to
+`ff2_zuerich_map.html` next to the notebook and displays it via
+`IPython.display.IFrame`. This bypasses VSCode's notebook-trust
+sandbox, which otherwise blocks folium's default `<iframe srcdoc="…">`
+output and shows only the *"Make this Notebook Trusted"* fallback text.
+The standalone `ff2_zuerich_map.html` can also be double-clicked to
+open the map full-screen in any browser.
+
+When generating the HTML report (`nbconvert --to html`), ship
+`ff2_zuerich_map.html` alongside it — the exported HTML references it
+via relative path.
+
 ### Step 16 — Export
 | File | Contents |
 |------|----------|
@@ -250,7 +262,7 @@ These feed downstream notebooks (FF synthesis / prioritisation).
 |---------|--------------|-----|
 | VSCode stuck on "Connecting to kernel…" | `bina` kernel.json points to interpreter without pandas/numpy/etc | Run the pip install in §1b, or re-register kernel from the right env |
 | `ModuleNotFoundError: No module named 'pandas'` (or numpy/scipy/…) | Same as above | Same |
-| Plotly/Folium cell shows blank output | VSCode's "Trust Notebook" not enabled | Click the "Not trusted" banner, run-all again |
+| Folium map shows only *"Make this Notebook Trusted"* | VSCode has no Trust-Notebook button; folium's srcdoc iframe is sandboxed | The map cell already saves `ff2_zuerich_map.html` and renders it via `IFrame` — re-run the cell; fall back to double-clicking the saved HTML if VSCode still blocks it |
 | `ValueError: 'trend_quality' not a column` (cell ~Step 12) | Cells run out of order; trend_quality is built in Step 10 | Use **Run All**, or run cells top-to-bottom |
 | `groupby.apply` deprecation warning | Non-fatal in pandas ≥2.2 | Ignore, or pass `include_groups=False` |
 | `ipynb` won't open / VSCode says corrupted | Editor saved while kernel was writing outputs | Re-execute via `nbconvert --inplace` to rewrite a clean file |
@@ -266,7 +278,9 @@ bina/
 │                                 #   data/clean/station_metadata.csv
 ├── 03_ff2_growth_hotspots.ipynb  # → data/clean/ff2_growth_trends.csv
 │                                 #   data/clean/ff2_yearly_totals.csv
+│                                 #   ff2_zuerich_map.html  (standalone map)
 ├── 03_ff2_growth_hotspots.html   # generated, shareable report (gitignore-able)
+├── ff2_zuerich_map.html          # standalone map; VSCode + HTML-export need this
 ├── environment.yml               # conda spec
 ├── CLAUDE.md                     # AI-assistant context for this repo
 └── MANUAL.md                     # this file

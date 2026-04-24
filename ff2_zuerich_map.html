@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_a389f94ceb04e4262b924f920aeeba56 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="position: fixed; bottom: 30px; left: 30px; z-index: 1000;
+     background: white; padding: 14px 16px; border-radius: 8px; border: 1px solid #ddd;
+     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+     font-family: Arial; font-size: 13px;">
+    <b style="font-size: 14px;">Wachstumstrend</b><br><br>
+    <span style="color:#1a7f37; font-size:18px;">&#9679;</span> Wachsende Station<br>
+    <span style="color:#cf222e; font-size:18px;">&#9679;</span> Schrumpfende Station<br>
+    <i style="color:#666;">Kreisgr&ouml;sse &#8733; St&auml;rke des Trends</i>
+</div>
+    
+            <div class="folium-map" id="map_a389f94ceb04e4262b924f920aeeba56" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_a389f94ceb04e4262b924f920aeeba56 = L.map(
+                "map_a389f94ceb04e4262b924f920aeeba56",
+                {
+                    center: [47.38573089748585, 8.529161771865251],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_e311fd13918f29a603774d364c199c3b = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_e311fd13918f29a603774d364c199c3b.addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_308484b02db0a7cb3778cb6f80afe875 = L.circle(
+                [47.38687404539732, 8.495060753778457],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.35, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 530.880605037217, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_fdfa8ac9048537f608b155deb8f4a684 = L.circle(
+                [47.38687404539732, 8.495060753778457],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.18, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 849.4089680595473, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_6b2b47f44f3e4ed03950e1dcdea8da7c = L.circle(
+                [47.38687404539732, 8.495060753778457],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1221.025391585599, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_marker_e785344090c9f95df908dea04aad5662 = L.circleMarker(
+                [47.38687404539732, 8.495060753778457],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+        var popup_c0ba537b73fdeeccb0661916dc026e0b = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_2fc8f95e45afec5696e08ca59bc0a62f = $(`<div id="html_2fc8f95e45afec5696e08ca59bc0a62f" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 230px;">         <h4 style="margin:0 0 8px 0; color:#1a7f37;">Station 3003</h4>         <table style="font-size: 13px; width: 100%;">             <tr><td><b>Trend:</b></td><td>+43,516 Fahrten/Jahr</td></tr>             <tr><td><b>Relativ:</b></td><td>+15.0%/Jahr</td></tr>             <tr><td><b>CAGR:</b></td><td>+13.4%</td></tr>             <tr><td><b>R²:</b></td><td>0.907</td></tr>             <tr><td><b>Qualität:</b></td><td>strong</td></tr>             <tr><td><b>Verdopplung:</b></td><td>5.5J</td></tr>             <tr><td><b>Ø Fahrten/J:</b></td><td>289,843</td></tr>         </table>     </div>     </div>`)[0];
+                popup_c0ba537b73fdeeccb0661916dc026e0b.setContent(html_2fc8f95e45afec5696e08ca59bc0a62f);
+            
+        
+
+        circle_marker_e785344090c9f95df908dea04aad5662.bindPopup(popup_c0ba537b73fdeeccb0661916dc026e0b)
+        ;
+
+        
+    
+    
+            circle_marker_e785344090c9f95df908dea04aad5662.bindTooltip(
+                `<div>
+                     Station 3003: +43,516/Jahr (+13.4%)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_76de8db41f063e7a600b526a445647fd = L.circle(
+                [47.37154938994078, 8.534334563689338],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.35, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 510.4575818558864, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_d33a03ddc646f5b6c3c8c71c9d5ed1f6 = L.circle(
+                [47.37154938994078, 8.534334563689338],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.18, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 816.7321309694183, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_01a715069bcb3ea0beb7ff7ddb5ee712 = L.circle(
+                [47.37154938994078, 8.534334563689338],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1174.0524382685387, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_marker_4dbdddcb38cf6e8cc374c2a40a145008 = L.circleMarker(
+                [47.37154938994078, 8.534334563689338],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+        var popup_3a13383418eed725b603da9f5b9d8270 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_3efbde13328bcf6d983833faee472f9e = $(`<div id="html_3efbde13328bcf6d983833faee472f9e" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 230px;">         <h4 style="margin:0 0 8px 0; color:#1a7f37;">Station 2991</h4>         <table style="font-size: 13px; width: 100%;">             <tr><td><b>Trend:</b></td><td>+41,353 Fahrten/Jahr</td></tr>             <tr><td><b>Relativ:</b></td><td>+10.1%/Jahr</td></tr>             <tr><td><b>CAGR:</b></td><td>+10.7%</td></tr>             <tr><td><b>R²:</b></td><td>0.224</td></tr>             <tr><td><b>Qualität:</b></td><td>weak</td></tr>             <tr><td><b>Verdopplung:</b></td><td>6.8J</td></tr>             <tr><td><b>Ø Fahrten/J:</b></td><td>409,311</td></tr>         </table>     </div>     </div>`)[0];
+                popup_3a13383418eed725b603da9f5b9d8270.setContent(html_3efbde13328bcf6d983833faee472f9e);
+            
+        
+
+        circle_marker_4dbdddcb38cf6e8cc374c2a40a145008.bindPopup(popup_3a13383418eed725b603da9f5b9d8270)
+        ;
+
+        
+    
+    
+            circle_marker_4dbdddcb38cf6e8cc374c2a40a145008.bindTooltip(
+                `<div>
+                     Station 2991: +41,353/Jahr (+10.7%)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_9f1c1ffaaa160127d97bf650214376e8 = L.circle(
+                [47.381746410504206, 8.528995126439215],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.35, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 285.89842142571547, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_7096e7bb917a416e2ee88bdbaea17c05 = L.circle(
+                [47.381746410504206, 8.528995126439215],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.18, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 457.4374742811448, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_52efcabd92146817a26577204b6c62f6 = L.circle(
+                [47.381746410504206, 8.528995126439215],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 657.5663692791455, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_marker_e861cc7ad6d4e2b4a81acbdc5391e925 = L.circleMarker(
+                [47.381746410504206, 8.528995126439215],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+        var popup_58ab5b93102ae7ce3f5712c5d028681a = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_8ab3d21db6c1918f575ccb3b6e7f6864 = $(`<div id="html_8ab3d21db6c1918f575ccb3b6e7f6864" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 230px;">         <h4 style="margin:0 0 8px 0; color:#1a7f37;">Station 4242</h4>         <table style="font-size: 13px; width: 100%;">             <tr><td><b>Trend:</b></td><td>+17,570 Fahrten/Jahr</td></tr>             <tr><td><b>Relativ:</b></td><td>+4.8%/Jahr</td></tr>             <tr><td><b>CAGR:</b></td><td>+5.1%</td></tr>             <tr><td><b>R²:</b></td><td>0.857</td></tr>             <tr><td><b>Qualität:</b></td><td>strong</td></tr>             <tr><td><b>Verdopplung:</b></td><td>13.9J</td></tr>             <tr><td><b>Ø Fahrten/J:</b></td><td>369,744</td></tr>         </table>     </div>     </div>`)[0];
+                popup_58ab5b93102ae7ce3f5712c5d028681a.setContent(html_8ab3d21db6c1918f575ccb3b6e7f6864);
+            
+        
+
+        circle_marker_e861cc7ad6d4e2b4a81acbdc5391e925.bindPopup(popup_58ab5b93102ae7ce3f5712c5d028681a)
+        ;
+
+        
+    
+    
+            circle_marker_e861cc7ad6d4e2b4a81acbdc5391e925.bindTooltip(
+                `<div>
+                     Station 4242: +17,570/Jahr (+5.1%)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_126b34e88afabc0046fa860fe5765c6b = L.circle(
+                [47.383797428136575, 8.515554577860643],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.35, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 288.2953455823837, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_ff54876f4ab40175958b000cebfce7f1 = L.circle(
+                [47.383797428136575, 8.515554577860643],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.18, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 461.2725529318139, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_6fc0e488e7817bd87bdc94d35bef6a1d = L.circle(
+                [47.383797428136575, 8.515554577860643],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 663.0792948394824, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_marker_49b134cb40b51325fd5d73722e22b1ff = L.circleMarker(
+                [47.383797428136575, 8.515554577860643],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+        var popup_6eda311c0968c2d44a86d1d19d4aa20c = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_d3af6b64160ab1364557c85676cb11e9 = $(`<div id="html_d3af6b64160ab1364557c85676cb11e9" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 230px;">         <h4 style="margin:0 0 8px 0; color:#1a7f37;">Station 732</h4>         <table style="font-size: 13px; width: 100%;">             <tr><td><b>Trend:</b></td><td>+17,824 Fahrten/Jahr</td></tr>             <tr><td><b>Relativ:</b></td><td>+4.3%/Jahr</td></tr>             <tr><td><b>CAGR:</b></td><td>+4.2%</td></tr>             <tr><td><b>R²:</b></td><td>0.876</td></tr>             <tr><td><b>Qualität:</b></td><td>strong</td></tr>             <tr><td><b>Verdopplung:</b></td><td>16.8J</td></tr>             <tr><td><b>Ø Fahrten/J:</b></td><td>414,933</td></tr>         </table>     </div>     </div>`)[0];
+                popup_6eda311c0968c2d44a86d1d19d4aa20c.setContent(html_d3af6b64160ab1364557c85676cb11e9);
+            
+        
+
+        circle_marker_49b134cb40b51325fd5d73722e22b1ff.bindPopup(popup_6eda311c0968c2d44a86d1d19d4aa20c)
+        ;
+
+        
+    
+    
+            circle_marker_49b134cb40b51325fd5d73722e22b1ff.bindTooltip(
+                `<div>
+                     Station 732: +17,824/Jahr (+4.2%)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_9b00aff3448ddb4949845419df7b65f8 = L.circle(
+                [47.41307390081829, 8.559332950784865],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.35, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 135.756092852454, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_c0289b5e6186e8b1a6721566a86e974a = L.circle(
+                [47.41307390081829, 8.559332950784865],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.18, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 217.2097485639264, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_a6998a4cc841d51d04fee6184cbb7a06 = L.circle(
+                [47.41307390081829, 8.559332950784865],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 312.2390135606442, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_marker_cf1a81e90b41e8103291c91679a3d62a = L.circleMarker(
+                [47.41307390081829, 8.559332950784865],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+        var popup_fe8621f68fc2bfde5466ceda1c93c529 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_9a37fcb21bd3ab9a9278fd2cb596d11a = $(`<div id="html_9a37fcb21bd3ab9a9278fd2cb596d11a" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 230px;">         <h4 style="margin:0 0 8px 0; color:#1a7f37;">Station 2986</h4>         <table style="font-size: 13px; width: 100%;">             <tr><td><b>Trend:</b></td><td>+1,669 Fahrten/Jahr</td></tr>             <tr><td><b>Relativ:</b></td><td>+0.6%/Jahr</td></tr>             <tr><td><b>CAGR:</b></td><td>+0.1%</td></tr>             <tr><td><b>R²:</b></td><td>0.015</td></tr>             <tr><td><b>Qualität:</b></td><td>weak</td></tr>             <tr><td><b>Verdopplung:</b></td><td>nie</td></tr>             <tr><td><b>Ø Fahrten/J:</b></td><td>291,958</td></tr>         </table>     </div>     </div>`)[0];
+                popup_fe8621f68fc2bfde5466ceda1c93c529.setContent(html_9a37fcb21bd3ab9a9278fd2cb596d11a);
+            
+        
+
+        circle_marker_cf1a81e90b41e8103291c91679a3d62a.bindPopup(popup_fe8621f68fc2bfde5466ceda1c93c529)
+        ;
+
+        
+    
+    
+            circle_marker_cf1a81e90b41e8103291c91679a3d62a.bindTooltip(
+                `<div>
+                     Station 2986: +1,669/Jahr (+0.1%)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_66afa08322e943e177ae486685f140a7 = L.circle(
+                [47.38243616080926, 8.54537859267952],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.35, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 148.14307698553932, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_7e6eee51156e006bbeaa158b8f703581 = L.circle(
+                [47.38243616080926, 8.54537859267952],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.18, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 237.02892317686292, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_f301c22ba62a1d39f49a8cbd29c5c1d3 = L.circle(
+                [47.38243616080926, 8.54537859267952],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 340.72907706674044, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_marker_3f96d8fd617de7765298a441999d8ebc = L.circleMarker(
+                [47.38243616080926, 8.54537859267952],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+        var popup_bec5dcb5f0dd784a959b2d08a26c8243 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_7d09b66d494659d9862067d4c5bb9274 = $(`<div id="html_7d09b66d494659d9862067d4c5bb9274" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 230px;">         <h4 style="margin:0 0 8px 0; color:#1a7f37;">Station 2993</h4>         <table style="font-size: 13px; width: 100%;">             <tr><td><b>Trend:</b></td><td>+2,981 Fahrten/Jahr</td></tr>             <tr><td><b>Relativ:</b></td><td>+0.5%/Jahr</td></tr>             <tr><td><b>CAGR:</b></td><td>-0.1%</td></tr>             <tr><td><b>R²:</b></td><td>0.036</td></tr>             <tr><td><b>Qualität:</b></td><td>weak</td></tr>             <tr><td><b>Verdopplung:</b></td><td>nie</td></tr>             <tr><td><b>Ø Fahrten/J:</b></td><td>559,143</td></tr>         </table>     </div>     </div>`)[0];
+                popup_bec5dcb5f0dd784a959b2d08a26c8243.setContent(html_7d09b66d494659d9862067d4c5bb9274);
+            
+        
+
+        circle_marker_3f96d8fd617de7765298a441999d8ebc.bindPopup(popup_bec5dcb5f0dd784a959b2d08a26c8243)
+        ;
+
+        
+    
+    
+            circle_marker_3f96d8fd617de7765298a441999d8ebc.bindTooltip(
+                `<div>
+                     Station 2993: +2,981/Jahr (-0.1%)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_c5d098af1494c26775288aede75c240b = L.circle(
+                [47.39891185000497, 8.53345327871236],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.35, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 135.87546618676777, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_bfc27f81d380b446e9e545b8b85ba102 = L.circle(
+                [47.39891185000497, 8.53345327871236],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.18, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 217.40074589882843, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_0b4edb35f3c2437d378f5e1fea7d30da = L.circle(
+                [47.39891185000497, 8.53345327871236],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 312.51357222956585, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_marker_36721e50f42a32e03d861d22f3d6aa8c = L.circleMarker(
+                [47.39891185000497, 8.53345327871236],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+        var popup_a36273f801aeb6a5f5541aa1c6c3c442 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_18fa1f266228f50b5656f2b2382bf2f4 = $(`<div id="html_18fa1f266228f50b5656f2b2382bf2f4" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 230px;">         <h4 style="margin:0 0 8px 0; color:#1a7f37;">Station 3012</h4>         <table style="font-size: 13px; width: 100%;">             <tr><td><b>Trend:</b></td><td>+1,681 Fahrten/Jahr</td></tr>             <tr><td><b>Relativ:</b></td><td>+0.3%/Jahr</td></tr>             <tr><td><b>CAGR:</b></td><td>+0.9%</td></tr>             <tr><td><b>R²:</b></td><td>0.067</td></tr>             <tr><td><b>Qualität:</b></td><td>weak</td></tr>             <tr><td><b>Verdopplung:</b></td><td>75.9J</td></tr>             <tr><td><b>Ø Fahrten/J:</b></td><td>525,163</td></tr>         </table>     </div>     </div>`)[0];
+                popup_a36273f801aeb6a5f5541aa1c6c3c442.setContent(html_18fa1f266228f50b5656f2b2382bf2f4);
+            
+        
+
+        circle_marker_36721e50f42a32e03d861d22f3d6aa8c.bindPopup(popup_a36273f801aeb6a5f5541aa1c6c3c442)
+        ;
+
+        
+    
+    
+            circle_marker_36721e50f42a32e03d861d22f3d6aa8c.bindTooltip(
+                `<div>
+                     Station 3012: +1,681/Jahr (+0.9%)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_f2e97da90c3ba23954d229d60680f2a7 = L.circle(
+                [47.383633078360745, 8.51581613802023],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.35, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 137.24596057083266, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_8077b92b1a4d5183c490d7fa475b9a7b = L.circle(
+                [47.383633078360745, 8.51581613802023],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.18, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 219.5935369133323, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_3b6d901b0862b9c8697e6f37ef4086b3 = L.circle(
+                [47.383633078360745, 8.51581613802023],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a7f37", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 315.6657093129151, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_marker_75701c1eb21f39c5beeb5f648ff3d323 = L.circleMarker(
+                [47.383633078360745, 8.51581613802023],
+                {"bubblingMouseEvents": true, "color": "#1a7f37", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+        var popup_4b4077884aee6c0a79cc2c4bb5b8d3d2 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_98ac9a7930d0a3b60d972611ac25fb65 = $(`<div id="html_98ac9a7930d0a3b60d972611ac25fb65" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 230px;">         <h4 style="margin:0 0 8px 0; color:#1a7f37;">Station 1037</h4>         <table style="font-size: 13px; width: 100%;">             <tr><td><b>Trend:</b></td><td>+1,827 Fahrten/Jahr</td></tr>             <tr><td><b>Relativ:</b></td><td>+0.2%/Jahr</td></tr>             <tr><td><b>CAGR:</b></td><td>+0.2%</td></tr>             <tr><td><b>R²:</b></td><td>0.011</td></tr>             <tr><td><b>Qualität:</b></td><td>weak</td></tr>             <tr><td><b>Verdopplung:</b></td><td>nie</td></tr>             <tr><td><b>Ø Fahrten/J:</b></td><td>962,460</td></tr>         </table>     </div>     </div>`)[0];
+                popup_4b4077884aee6c0a79cc2c4bb5b8d3d2.setContent(html_98ac9a7930d0a3b60d972611ac25fb65);
+            
+        
+
+        circle_marker_75701c1eb21f39c5beeb5f648ff3d323.bindPopup(popup_4b4077884aee6c0a79cc2c4bb5b8d3d2)
+        ;
+
+        
+    
+    
+            circle_marker_75701c1eb21f39c5beeb5f648ff3d323.bindTooltip(
+                `<div>
+                     Station 1037: +1,827/Jahr (+0.2%)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_435ae9e1eebdd324f25e6f109c0e07ab = L.circle(
+                [47.38499919794867, 8.536955366902642],
+                {"bubblingMouseEvents": true, "color": "#cf222e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#cf222e", "fillOpacity": 0.35, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 180.3443005730455, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_121f2ea8b457252d0ef84b7c0c5a9022 = L.circle(
+                [47.38499919794867, 8.536955366902642],
+                {"bubblingMouseEvents": true, "color": "#cf222e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#cf222e", "fillOpacity": 0.18, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 288.5508809168728, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_1557f81db036f9756e39f4e8da36c3f5 = L.circle(
+                [47.38499919794867, 8.536955366902642],
+                {"bubblingMouseEvents": true, "color": "#cf222e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#cf222e", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 414.7918913180046, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_marker_b8664f6bfd008b9009db0a4778e63083 = L.circleMarker(
+                [47.38499919794867, 8.536955366902642],
+                {"bubblingMouseEvents": true, "color": "#cf222e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+        var popup_bd5d9e43c9da2913b3129290f79c1f22 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_211f368dbaa21c2846147245e714d621 = $(`<div id="html_211f368dbaa21c2846147245e714d621" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 230px;">         <h4 style="margin:0 0 8px 0; color:#cf222e;">Station 2997</h4>         <table style="font-size: 13px; width: 100%;">             <tr><td><b>Trend:</b></td><td>-6,391 Fahrten/Jahr</td></tr>             <tr><td><b>Relativ:</b></td><td>-1.6%/Jahr</td></tr>             <tr><td><b>CAGR:</b></td><td>-1.6%</td></tr>             <tr><td><b>R²:</b></td><td>0.153</td></tr>             <tr><td><b>Qualität:</b></td><td>weak</td></tr>             <tr><td><b>Verdopplung:</b></td><td>nie</td></tr>             <tr><td><b>Ø Fahrten/J:</b></td><td>405,841</td></tr>         </table>     </div>     </div>`)[0];
+                popup_bd5d9e43c9da2913b3129290f79c1f22.setContent(html_211f368dbaa21c2846147245e714d621);
+            
+        
+
+        circle_marker_b8664f6bfd008b9009db0a4778e63083.bindPopup(popup_bd5d9e43c9da2913b3129290f79c1f22)
+        ;
+
+        
+    
+    
+            circle_marker_b8664f6bfd008b9009db0a4778e63083.bindTooltip(
+                `<div>
+                     Station 2997: -6,391/Jahr (-1.6%)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_17eb2df327285694b8460a53dc9d1c35 = L.circle(
+                [47.38064522361518, 8.528442863690023],
+                {"bubblingMouseEvents": true, "color": "#cf222e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#cf222e", "fillOpacity": 0.35, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 174.34850493923506, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_f07b13fd6fc0d4ede227228323265f76 = L.circle(
+                [47.38064522361518, 8.528442863690023],
+                {"bubblingMouseEvents": true, "color": "#cf222e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#cf222e", "fillOpacity": 0.18, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 278.9576079027761, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_053fcffa84170d4b4846b5cdfe15a4f2 = L.circle(
+                [47.38064522361518, 8.528442863690023],
+                {"bubblingMouseEvents": true, "color": "#cf222e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#cf222e", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 401.0015613602406, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_marker_24cadb9261dea76531f88cbe3ae73a73 = L.circleMarker(
+                [47.38064522361518, 8.528442863690023],
+                {"bubblingMouseEvents": true, "color": "#cf222e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+        var popup_9942758186565f8b93de03155a16e0f3 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_5a852b3dd395383fcebeb83711369a27 = $(`<div id="html_5a852b3dd395383fcebeb83711369a27" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 230px;">         <h4 style="margin:0 0 8px 0; color:#cf222e;">Station 4241</h4>         <table style="font-size: 13px; width: 100%;">             <tr><td><b>Trend:</b></td><td>-5,756 Fahrten/Jahr</td></tr>             <tr><td><b>Relativ:</b></td><td>-1.7%/Jahr</td></tr>             <tr><td><b>CAGR:</b></td><td>-1.3%</td></tr>             <tr><td><b>R²:</b></td><td>0.275</td></tr>             <tr><td><b>Qualität:</b></td><td>weak</td></tr>             <tr><td><b>Verdopplung:</b></td><td>nie</td></tr>             <tr><td><b>Ø Fahrten/J:</b></td><td>333,089</td></tr>         </table>     </div>     </div>`)[0];
+                popup_9942758186565f8b93de03155a16e0f3.setContent(html_5a852b3dd395383fcebeb83711369a27);
+            
+        
+
+        circle_marker_24cadb9261dea76531f88cbe3ae73a73.bindPopup(popup_9942758186565f8b93de03155a16e0f3)
+        ;
+
+        
+    
+    
+            circle_marker_24cadb9261dea76531f88cbe3ae73a73.bindTooltip(
+                `<div>
+                     Station 4241: -5,756/Jahr (-1.3%)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_3ffeb7ff077ecfea6d29c28c203b68dc = L.circle(
+                [47.38049246120339, 8.52842649666216],
+                {"bubblingMouseEvents": true, "color": "#cf222e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#cf222e", "fillOpacity": 0.35, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 561.6260254789288, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_774316afd40b99d4e285499b9e277383 = L.circle(
+                [47.38049246120339, 8.52842649666216],
+                {"bubblingMouseEvents": true, "color": "#cf222e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#cf222e", "fillOpacity": 0.18, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 898.6016407662861, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_0c3093371b4f0e3cc668155f22dc4a2e = L.circle(
+                [47.38049246120339, 8.52842649666216],
+                {"bubblingMouseEvents": true, "color": "#cf222e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#cf222e", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1291.739858601536, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_marker_b4af9542341d9558eb494eb068528b13 = L.circleMarker(
+                [47.38049246120339, 8.52842649666216],
+                {"bubblingMouseEvents": true, "color": "#cf222e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+        var popup_a1f075f23725a44ed42cae6f4e3a610d = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_29ccf03167fea1071c3b8f42746fbddd = $(`<div id="html_29ccf03167fea1071c3b8f42746fbddd" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 230px;">         <h4 style="margin:0 0 8px 0; color:#cf222e;">Station 4249</h4>         <table style="font-size: 13px; width: 100%;">             <tr><td><b>Trend:</b></td><td>-46,772 Fahrten/Jahr</td></tr>             <tr><td><b>Relativ:</b></td><td>-4.0%/Jahr</td></tr>             <tr><td><b>CAGR:</b></td><td>-4.7%</td></tr>             <tr><td><b>R²:</b></td><td>0.757</td></tr>             <tr><td><b>Qualität:</b></td><td>moderate</td></tr>             <tr><td><b>Verdopplung:</b></td><td>nie</td></tr>             <tr><td><b>Ø Fahrten/J:</b></td><td>1,162,289</td></tr>         </table>     </div>     </div>`)[0];
+                popup_a1f075f23725a44ed42cae6f4e3a610d.setContent(html_29ccf03167fea1071c3b8f42746fbddd);
+            
+        
+
+        circle_marker_b4af9542341d9558eb494eb068528b13.bindPopup(popup_a1f075f23725a44ed42cae6f4e3a610d)
+        ;
+
+        
+    
+    
+            circle_marker_b4af9542341d9558eb494eb068528b13.bindTooltip(
+                `<div>
+                     Station 4249: -46,772/Jahr (-4.7%)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_05c9f89b477a0bcfb05cf560bbd101f0 = L.circle(
+                [47.38061162309075, 8.528190553163558],
+                {"bubblingMouseEvents": true, "color": "#cf222e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#cf222e", "fillOpacity": 0.35, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 900.0, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_f6fd5511b6d6073f02816519f913fc9d = L.circle(
+                [47.38061162309075, 8.528190553163558],
+                {"bubblingMouseEvents": true, "color": "#cf222e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#cf222e", "fillOpacity": 0.18, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1440.0, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_429a335944d6724d4c6e547a161f928b = L.circle(
+                [47.38061162309075, 8.528190553163558],
+                {"bubblingMouseEvents": true, "color": "#cf222e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#cf222e", "fillOpacity": 0.07, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 2070.0, "stroke": true, "weight": 0}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+            var circle_marker_bea97c0653255bb515c69a46490b20b1 = L.circleMarker(
+                [47.38061162309075, 8.528190553163558],
+                {"bubblingMouseEvents": true, "color": "#cf222e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 2}
+            ).addTo(map_a389f94ceb04e4262b924f920aeeba56);
+        
+    
+        var popup_0e57143131d4003c30bb837ac0efeffc = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_f833df3d649b5bf8f639229d61af4ce2 = $(`<div id="html_f833df3d649b5bf8f639229d61af4ce2" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; width: 230px;">         <h4 style="margin:0 0 8px 0; color:#cf222e;">Station 2989</h4>         <table style="font-size: 13px; width: 100%;">             <tr><td><b>Trend:</b></td><td>-82,609 Fahrten/Jahr</td></tr>             <tr><td><b>Relativ:</b></td><td>-5.8%/Jahr</td></tr>             <tr><td><b>CAGR:</b></td><td>-6.8%</td></tr>             <tr><td><b>R²:</b></td><td>0.568</td></tr>             <tr><td><b>Qualität:</b></td><td>moderate</td></tr>             <tr><td><b>Verdopplung:</b></td><td>nie</td></tr>             <tr><td><b>Ø Fahrten/J:</b></td><td>1,416,494</td></tr>         </table>     </div>     </div>`)[0];
+                popup_0e57143131d4003c30bb837ac0efeffc.setContent(html_f833df3d649b5bf8f639229d61af4ce2);
+            
+        
+
+        circle_marker_bea97c0653255bb515c69a46490b20b1.bindPopup(popup_0e57143131d4003c30bb837ac0efeffc)
+        ;
+
+        
+    
+    
+            circle_marker_bea97c0653255bb515c69a46490b20b1.bindTooltip(
+                `<div>
+                     Station 2989: -82,609/Jahr (-6.8%)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>
