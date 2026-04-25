@@ -26,6 +26,26 @@ All CSVs are downloaded into `data/` (gitignored). Notebook `01_data_acquisition
 - FF1: Temporal patterns & demand ranking (time-of-day, weekday, season)
 - FF2: Growth hotspots (which stations show strongest growth trends 2020-2025?)
 
-## Notebook Structure
+## Repo Structure
 
-Notebooks are numbered sequentially: `01_data_acquisition`, `02_data_cleaning`, `03_ff2_growth_hotspots` etc.
+```
+bina/
+├── CLAUDE.md              Project instructions for Claude
+├── environment.yml        Conda environment definition
+├── data/                  Raw + cleaned datasets (gitignored)
+│   └── clean/             Cleaned parquet/CSV outputs from notebook 02
+├── notebooks/             Analysis notebooks
+│   ├── 01_data_acquisition.ipynb    Shared: download raw CSVs
+│   ├── 02_data_cleaning.ipynb       Shared: clean + export parquet
+│   └── FF2/               FF2 specific: growth hotspots
+│       ├── 03_ff2_growth_hotspots.ipynb
+│       ├── 03_ff2_growth_hotspots.html   nbconvert export
+│       └── ff2_zuerich_map.html          folium map output
+└── docs/                  Guidelines, reference PDFs, DOCX briefs,
+                           cheatsheets, non-technical guides
+```
+
+Shared preparation notebooks (01, 02) live directly under `notebooks/`.
+Each research question gets its own subfolder (`FF2/`, future `FF1/`, `FF3/`, ...).
+Notebooks reference data with relative paths: `../data/...` from `notebooks/`,
+`../../data/...` from `notebooks/FF2/`.
