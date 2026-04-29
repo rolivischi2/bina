@@ -13,22 +13,26 @@ station-level priority ranking for capacity-expansion decisions.
 
 ```
 bina/
-├── README.md            (you are here)
-├── CLAUDE.md            project instructions for Claude Code
-├── environment.yml      Conda env definition
-├── data/                raw + cleaned datasets (gitignored)
-│   └── clean/           parquet/CSV outputs from notebook 02
+├── README.md             (you are here)
+├── CLAUDE.md             project instructions for Claude Code
+├── environment.yml       Conda env definition
+├── data_bundle.tar.xz    compressed dataset bundle (~63 MB, tracked in git)
+├── setup.sh / setup.ps1  one-shot data-hydration scripts
+├── scripts/
+│   └── setup_data.py     extracts the bundle into data/
+├── data/                 raw + cleaned datasets (gitignored — populated by setup)
+│   └── clean/            parquet/CSV outputs from notebook 02
 ├── notebooks/
-│   ├── 01_data_acquisition.ipynb   shared: download raw CSVs
+│   ├── 01_data_acquisition.ipynb   shared: re-download raw CSVs (only if you need fresh)
 │   ├── 02_data_cleaning.ipynb      shared: clean + export parquet
-│   └── FF2/
-│       └── 03_ff2_growth_hotspots.ipynb   FF2: growth hotspots
-└── docs/                guides, briefs, reference PDFs, cheatsheets
+│   ├── FF1/                        FF1: absolutes Veloaufkommen
+│   ├── FF2/                        FF2: growth hotspots
+│   └── FF3/                        FF3: Wettersensitivität
+└── docs/                 guides, briefs, reference PDFs, cheatsheets
 ```
 
-Future research questions get their own subfolder under `notebooks/`
-(`FF1/`, `FF3/`, …). The shared preparation notebooks (01, 02) stay
-directly under `notebooks/`.
+Each research question lives in its own subfolder under `notebooks/`.
+The shared preparation notebooks (01, 02) stay directly under `notebooks/`.
 
 ---
 
@@ -65,7 +69,32 @@ python -m ipykernel install --user --name bina --display-name "Python (bina)"
 This makes a kernel called **Python (bina)** available to any Jupyter
 client on this machine.
 
-### 1.4 Sanity check
+### 1.4 Hydrate `data/`
+
+The repo ships a compressed bundle (`data_bundle.tar.xz`, ~63 MB) with
+all raw and cleaned datasets needed by every notebook. Run the
+appropriate setup script for your shell:
+
+```bash
+# macOS / Linux / Git Bash
+./setup.sh
+```
+
+```powershell
+# Windows PowerShell
+.\setup.ps1
+```
+
+Both wrappers just call `python scripts/setup_data.py`. The script is
+idempotent — re-running it does nothing if `data/` is already populated.
+Pass `--force` to re-extract.
+
+If you ever need to refresh from the upstream Zürich open-data portal
+(e.g. after a new year of measurements is published), run notebook
+[notebooks/01_data_acquisition.ipynb](notebooks/01_data_acquisition.ipynb)
+end-to-end — it re-downloads every file the bundle contains.
+
+### 1.5 Sanity check
 
 ```bash
 python -c "import pandas, numpy, matplotlib, seaborn, scipy, folium, pyproj; print('ok')"
