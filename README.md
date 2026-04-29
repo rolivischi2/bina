@@ -12,7 +12,7 @@ station-level priority ranking for capacity-expansion decisions.
 bina/
 ├── README.md             (you are here)
 ├── environment.yml       Conda env definition
-├── data_bundle.tar.xz    compressed dataset bundle (~63 MB, tracked in git)
+├── data_bundle.zip       compressed dataset bundle (~93 MB, tracked in git)
 ├── setup.sh / setup.ps1  one-shot data-hydration scripts
 ├── scripts/
 │   └── setup_data.py     extracts the bundle into data/
@@ -66,9 +66,9 @@ client on this machine.
 
 ### 1.4 Hydrate `data/`
 
-The repo ships a compressed bundle (`data_bundle.tar.xz`, ~63 MB) with
-all raw and cleaned datasets needed by every notebook. Run the
-appropriate setup script for your shell:
+The repo ships a compressed bundle (`data_bundle.zip`, ~93 MB) with all
+raw and cleaned datasets needed by every notebook. Run the appropriate
+setup script for your shell:
 
 ```bash
 # macOS / Linux / Git Bash
@@ -83,6 +83,11 @@ appropriate setup script for your shell:
 Both wrappers just call `python scripts/setup_data.py`. The script is
 idempotent — re-running it does nothing if `data/` is already populated.
 Pass `--force` to re-extract.
+
+If you'd rather extract by hand, just unzip `data_bundle.zip` into
+`data/`. Windows Explorer (right-click → Extract All), PowerShell
+(`Expand-Archive data_bundle.zip data/`), and macOS double-click all
+work natively.
 
 If you ever need to refresh from the upstream Zürich open-data portal
 (e.g. after a new year of measurements is published), run notebook
