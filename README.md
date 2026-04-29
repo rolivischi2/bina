@@ -4,9 +4,6 @@ Exploratory data analysis on bicycle traffic in Zürich. Investigates
 temporal patterns and growth hotspots (2020–2025) and produces a
 station-level priority ranking for capacity-expansion decisions.
 
-> Looking for the full end-to-end walkthrough? See [docs/MANUAL.md](docs/MANUAL.md).
-> Non-technical reading order is in [docs/NON_TECHNICAL_GUIDE.md](docs/NON_TECHNICAL_GUIDE.md).
-
 ---
 
 ## Repo layout
@@ -14,7 +11,6 @@ station-level priority ranking for capacity-expansion decisions.
 ```
 bina/
 ├── README.md             (you are here)
-├── CLAUDE.md             project instructions for Claude Code
 ├── environment.yml       Conda env definition
 ├── data_bundle.tar.xz    compressed dataset bundle (~63 MB, tracked in git)
 ├── setup.sh / setup.ps1  one-shot data-hydration scripts
@@ -22,13 +18,12 @@ bina/
 │   └── setup_data.py     extracts the bundle into data/
 ├── data/                 raw + cleaned datasets (gitignored — populated by setup)
 │   └── clean/            parquet/CSV outputs from notebook 02
-├── notebooks/
-│   ├── 01_data_acquisition.ipynb   shared: re-download raw CSVs (only if you need fresh)
-│   ├── 02_data_cleaning.ipynb      shared: clean + export parquet
-│   ├── FF1/                        FF1: absolutes Veloaufkommen
-│   ├── FF2/                        FF2: growth hotspots
-│   └── FF3/                        FF3: Wettersensitivität
-└── docs/                 guides, briefs, reference PDFs, cheatsheets
+└── notebooks/
+    ├── 01_data_acquisition.ipynb   shared: re-download raw CSVs from data.stadt-zuerich.ch
+    ├── 02_data_cleaning.ipynb      shared: clean + export parquet/CSV
+    ├── FF1/                        FF1: absolutes Veloaufkommen
+    ├── FF2/                        FF2: growth hotspots
+    └── FF3/                        FF3: Wettersensitivität
 ```
 
 Each research question lives in its own subfolder under `notebooks/`.
@@ -238,16 +233,3 @@ Notebooks are JSON, so diffs and merges are noisy. Two habits help:
 
 For larger projects, tools like `nbstripout` or `jupytext` can help, but
 they are not configured here.
-
----
-
-## 4. Where to look next
-
-- [docs/MANUAL.md](docs/MANUAL.md) — full pipeline walkthrough, data
-  semantics, kernel troubleshooting
-- [docs/NON_TECHNICAL_GUIDE.md](docs/NON_TECHNICAL_GUIDE.md) — short
-  reading order without code
-- [docs/data_cleaning_best_practices.md](docs/data_cleaning_best_practices.md)
-- [docs/python_bi_cheatsheet.md](docs/python_bi_cheatsheet.md)
-- [docs/CPA-From-Data-to-Decisions-Guideline-Jan-2020.pdf](docs/CPA-From-Data-to-Decisions-Guideline-Jan-2020.pdf)
-  — the CPA framework that drives the FF logic
