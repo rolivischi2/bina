@@ -1,71 +1,60 @@
 # `data/` — local-only datasets
 
-This folder is **gitignored**. It holds the raw and cleaned CSVs/JSON/parquet
-files that every notebook reads. Nothing in here is committed to git, but the
-folder itself is tracked via this NOTE so a fresh clone has a place to put the
-files.
+The raw CSV/JSON/parquet files in this folder are **gitignored** and not
+committed. The **two exceptions tracked in git** are this `NOTE.md` and the
+compressed bundle `data_bundle.zip` — the bundle ships the raw data so a fresh
+clone can hydrate this folder.
 
 ## How it gets populated
 
-The repo ships a compressed dataset bundle at the **repo root**:
+The bundle lives right here:
 
 ```
-data_bundle.zip   (~93 MB, tracked in git)
+data/data_bundle.zip   (~97 MB, tracked in git)
 ```
 
-Run the setup script once after cloning to extract it into this folder:
+**Unzip it in place** after cloning:
 
 ```bash
-# macOS / Linux / Git Bash
-./setup.sh
-
-# Windows PowerShell
-.\setup.ps1
+unzip data/data_bundle.zip -d data/
 ```
 
-Both wrappers call `python scripts/setup_data.py`, which is idempotent — if
-`data/` is already populated it does nothing. Pass `--force` to re-extract.
-
-Manual fallback: just unzip `data_bundle.zip` into this folder. Windows
-Explorer (right-click → Extract All), PowerShell (`Expand-Archive`), and
-macOS double-click all handle `.zip` natively.
+Windows Explorer (right-click → Extract All into `data/`), PowerShell
+(`Expand-Archive data/data_bundle.zip data/`), and macOS double-click all
+handle `.zip` natively too.
 
 ## What ends up here
 
-After setup, you'll see roughly:
+After extraction, you'll see roughly:
 
 ```
 data/
 ├── NOTE.md                                                (this file)
-├── 2020_verkehrszaehlungen_werte_fussgaenger_velo.csv     ← FF1, NB02
-├── 2021_verkehrszaehlungen_werte_fussgaenger_velo.csv
+├── 2020_verkehrszaehlungen_werte_fussgaenger_velo.csv     ← FF2 (per-year, 15-min)
 ├── ...                                                    (one CSV per year, 2020-2025)
 ├── 2025_verkehrszaehlungen_werte_fussgaenger_velo.csv
 ├── verkehrszaehlungen_werte_fussgaenger_velo_alle_jahre.parquet  ← FF3
-├── standorte_velo_fuss.json                               ← FF2 (id1 -> bezeichnung)
+├── standorte_velo_fuss.json                               ← FF2 (id1 → bezeichnung)
 ├── taz.view_eco_standorte.csv                             ← FF3
 ├── ugz_ogd_meteo_d1_2020.csv                              ← FF3 (Tagesmeteodaten)
 ├── ...                                                    (one CSV per year)
-├── ugz_ogd_meteo_d1_2025.csv
-└── clean/                                                 ← outputs of NB02
-    ├── velo_15min_clean.parquet                           ← FF2
-    ├── station_metadata.csv                               ← FF2, FF3
-    ├── ff2_growth_trends.csv                              ← FF2 (priority score export)
-    └── ff2_yearly_totals.csv
+└── ugz_ogd_meteo_d1_2025.csv
 ```
+
+Each FF notebook cleans its own data inline (no shared cleaning step anymore).
+FF1 pulls its own per-year CSVs from a separate GitHub repo, so it does not
+depend on the files above.
 
 ## Refreshing from upstream
 
 If new measurement data is published on
-[data.stadt-zuerich.ch](https://data.stadt-zuerich.ch) (typically yearly), run
-[notebooks/01_data_acquisition.ipynb](../notebooks/01_data_acquisition.ipynb)
-end-to-end. It re-downloads every file in this folder from the canonical
-sources. Then re-run [notebooks/02_data_cleaning.ipynb](../notebooks/02_data_cleaning.ipynb)
-to refresh `clean/`.
+[data.stadt-zuerich.ch](https://data.stadt-zuerich.ch) (typically yearly),
+download the updated files and regenerate `data/data_bundle.zip`.
 
-## Don't commit anything from here
+## Don't commit the loose data files
 
 `.gitignore` rules out `*.csv`, `*.json`, `*.geojson`, `*.xlsx`, `*.parquet`
-and `clean/` to prevent accidentally pushing the raw data. If you want to
-ship a new dataset bundle, regenerate `data_bundle.zip` at the repo root
-instead.
+and `clean/` to prevent accidentally pushing the raw data. The compressed
+`data_bundle.zip` is **not** ignored and is the only data artifact meant to be
+tracked — to ship updated data, regenerate that bundle rather than committing
+loose files.

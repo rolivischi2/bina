@@ -12,22 +12,18 @@ station-level priority ranking for capacity-expansion decisions.
 bina/
 ├── README.md             (you are here)
 ├── environment.yml       Conda env definition
-├── data_bundle.zip       compressed dataset bundle (~93 MB, tracked in git)
-├── setup.sh / setup.ps1  one-shot data-hydration scripts
-├── scripts/
-│   └── setup_data.py     extracts the bundle into data/
-├── data/                 raw + cleaned datasets (gitignored — populated by setup)
-│   └── clean/            parquet/CSV outputs from notebook 02
+├── data/
+│   └── data_bundle.zip   compressed dataset bundle (~97 MB, tracked in git)
+│                         — unzip in place to hydrate data/ (gitignored otherwise)
 └── notebooks/
-    ├── 01_data_acquisition.ipynb   shared: re-download raw CSVs from data.stadt-zuerich.ch
-    ├── 02_data_cleaning.ipynb      shared: clean + export parquet/CSV
-    ├── FF1/                        FF1: absolutes Veloaufkommen
-    ├── FF2/                        FF2: growth hotspots
-    └── FF3/                        FF3: Wettersensitivität
+    ├── FF1/              FF1: absolutes Veloaufkommen
+    ├── FF2/              FF2: growth hotspots (incl. data cleaning)
+    └── FF3/              FF3: Wettersensitivität
 ```
 
-Each research question lives in its own subfolder under `notebooks/`.
-The shared preparation notebooks (01, 02) stay directly under `notebooks/`.
+Each research question lives in its own subfolder under `notebooks/` and cleans
+its own data inline. The raw datasets ship compressed as `data/data_bundle.zip`;
+unzip it in place before running any notebook.
 
 ---
 
@@ -66,33 +62,23 @@ client on this machine.
 
 ### 1.4 Hydrate `data/`
 
-The repo ships a compressed bundle (`data_bundle.zip`, ~93 MB) with all
-raw and cleaned datasets needed by every notebook. Run the appropriate
-setup script for your shell:
+The repo ships a compressed bundle (`data/data_bundle.zip`, ~97 MB) with all
+raw datasets needed by the notebooks. **Unzip it in place** into `data/`:
 
 ```bash
-# macOS / Linux / Git Bash
-./setup.sh
+unzip data/data_bundle.zip -d data/
 ```
 
-```powershell
-# Windows PowerShell
-.\setup.ps1
-```
+Windows Explorer (right-click → Extract All into `data/`), PowerShell
+(`Expand-Archive data/data_bundle.zip data/`), and macOS double-click all
+work natively too.
 
-Both wrappers just call `python scripts/setup_data.py`. The script is
-idempotent — re-running it does nothing if `data/` is already populated.
-Pass `--force` to re-extract.
+> The bundle stays tracked in git (only the loose `*.csv/json/parquet` it
+> contains are gitignored), so a fresh clone already has it — you just extract.
 
-If you'd rather extract by hand, just unzip `data_bundle.zip` into
-`data/`. Windows Explorer (right-click → Extract All), PowerShell
-(`Expand-Archive data_bundle.zip data/`), and macOS double-click all
-work natively.
-
-If you ever need to refresh from the upstream Zürich open-data portal
-(e.g. after a new year of measurements is published), run notebook
-[notebooks/01_data_acquisition.ipynb](notebooks/01_data_acquisition.ipynb)
-end-to-end — it re-downloads every file the bundle contains.
+To refresh from the upstream Zürich open-data portal after a new year of
+measurements is published, download the updated CSV/parquet files and
+regenerate `data/data_bundle.zip`.
 
 ### 1.5 Sanity check
 
@@ -114,24 +100,20 @@ python -c "import pandas, numpy, matplotlib, seaborn, scipy, folium, pyproj; pri
 
 ### Order to run
 
-The notebooks have data dependencies:
+First **unzip `data/data_bundle.zip`** (see 1.4) to hydrate `data/`. Then run
+any notebook below in **any order** — each cleans its own data inline.
 
-| # | Notebook | Produces | Needed by |
-|---|----------|----------|-----------|
-| 01 | `notebooks/01_data_acquisition.ipynb` | raw CSVs in `data/` | 02 |
-| 02 | `notebooks/02_data_cleaning.ipynb` | `data/clean/velo_15min_clean.parquet`, `data/clean/station_metadata.csv` | 03 |
-| 03 | `notebooks/FF2/03_ff2_growth_hotspots.ipynb` | `data/clean/ff2_growth_trends.csv`, inline Zürich map | — |
-
-Run 01 first, then 02, then any FF notebook. After the first full pass,
-01 and 02 only need re-running when the upstream Zürich CSVs are
-refreshed for the year.
+| # | Notebook | Role |
+|---|----------|------|
+| FF1 | `notebooks/FF1/FF1_absolutes_aufkommen.ipynb` | standalone — cleans + analyses its own data |
+| FF2 | `notebooks/FF2/03_ff2_growth_hotspots.ipynb` | standalone — cleaning + growth analysis in one notebook |
+| FF3 | `notebooks/FF3/04_ff3_Wettersensitivität_v2.ipynb` | standalone — weather-sensitivity analysis |
 
 ### Running from the CLI
 
 ```bash
 conda activate bina
-jupyter nbconvert --to notebook --execute --inplace notebooks/01_data_acquisition.ipynb
-jupyter nbconvert --to notebook --execute --inplace notebooks/02_data_cleaning.ipynb
+unzip data/data_bundle.zip -d data/   # once, to hydrate data/
 jupyter nbconvert --to notebook --execute --inplace notebooks/FF2/03_ff2_growth_hotspots.ipynb
 ```
 
