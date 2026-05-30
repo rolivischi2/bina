@@ -13,15 +13,20 @@ The bundle lives right here:
 data/data_bundle.zip   (~97 MB, tracked in git)
 ```
 
-**Unzip it in place** after cloning:
+**Unzip it flat into this folder** after cloning — the files must land at
+`data/<file>`, not inside a subfolder:
 
 ```bash
-unzip data/data_bundle.zip -d data/
+unzip data/data_bundle.zip -d data/ -x NOTE.md
 ```
 
-Windows Explorer (right-click → Extract All into `data/`), PowerShell
-(`Expand-Archive data/data_bundle.zip data/`), and macOS double-click all
-handle `.zip` natively too.
+(`-x NOTE.md` skips the stale copy inside the bundle so this tracked `NOTE.md`
+survives.) PowerShell: `Expand-Archive data/data_bundle.zip data/`.
+
+> **macOS: don't double-click the zip** — Archive Utility unpacks it into a
+> `data/data_bundle/` subfolder the notebooks won't find. Use the `unzip`
+> command. If you already double-clicked:
+> `rm -f data/data_bundle/NOTE.md && mv data/data_bundle/* data/ && rmdir data/data_bundle`.
 
 ## What ends up here
 

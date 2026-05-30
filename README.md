@@ -63,15 +63,21 @@ client on this machine.
 ### 1.4 Hydrate `data/`
 
 The repo ships a compressed bundle (`data/data_bundle.zip`, ~97 MB) with all
-raw datasets needed by the notebooks. **Unzip it in place** into `data/`:
+raw datasets needed by the notebooks. **Unzip it flat into `data/`** — the
+files must land at `data/<file>`, not inside a subfolder:
 
 ```bash
-unzip data/data_bundle.zip -d data/
+unzip data/data_bundle.zip -d data/ -x NOTE.md
 ```
 
-Windows Explorer (right-click → Extract All into `data/`), PowerShell
-(`Expand-Archive data/data_bundle.zip data/`), and macOS double-click all
-work natively too.
+(`-x NOTE.md` skips the stale copy inside the bundle so it doesn't overwrite
+this folder's tracked `NOTE.md`.) Windows works the same via PowerShell:
+`Expand-Archive data/data_bundle.zip data/`.
+
+> **macOS: don't double-click the zip.** Archive Utility extracts it into a
+> `data/data_bundle/` *subfolder*, which the notebooks won't find. Use the
+> `unzip` command above. If you already double-clicked, move the files up:
+> `rm -f data/data_bundle/NOTE.md && mv data/data_bundle/* data/ && rmdir data/data_bundle`.
 
 > The bundle stays tracked in git (only the loose `*.csv/json/parquet` it
 > contains are gitignored), so a fresh clone already has it — you just extract.
